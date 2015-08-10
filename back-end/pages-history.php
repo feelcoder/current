@@ -1,3 +1,8 @@
+<?php error_reporting(E_ALL ^ E_DEPRECATED);
+mysql_pconnect("localhost","root","00school");
+mysql_select_db("test");
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>        
@@ -23,39 +28,55 @@
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="../front-end/index.html">Quick Money</a>
-                        <a href="" class="x-navigation-control"></a>
+                        <a href="../index.php">Quick Money Transfer</a>
+                        <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
-                        
                         <div class="profile">
                             <div class="profile-image">
-                                <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
-                            </div>
-                            <div class="profile-data">
-                                <div class="profile-data-name">shadow-code</div>
-                                <div class="profile-data-title">Hacker and Cracker</div>
-                                
-                            </div>
-                            
+                               <!-- start php -->
+                                <?php
+                                    //get user profile picture
+                                    if(isset($_SESSION["username"]))
+                                    {
+                                        $username = $_SESSION["username"];
+                                        $r = mysql_query('select profile_picture from users where username="'.$username.'"');
+                                        $x = mysql_query('select description from users where username="'.$username.'"');
+                                        $description = mysql_result($x, 0);
+
+                                        if(!$x)
+                                            die(mysql_error());
+                                        if(!$r)
+                                            die(mysql_error());
+                                        
+                                        $path = mysql_result($r, 0);
+                                        echo '<img src="'.$path.'" alt="profile_picture"/>
+                                </div>
+                                <div class="profile-data">
+                                    <div class="profile-data-name">'.$username.'</div>
+                                    <div class="profile-data-title">'.$description.'</div>
+                                </div>';
+                                    }
+                            ?>
                         </div>                                                                        
                     </li>
                     <li class="xn-title">Navigation</li>
                     <li class="active">
-                        <a href="index.html"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>                        
+                        <a href="index.php"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>                        
                     </li> 
                     <li class="active">
-                        <a href="pages-transaction.html"><span class="fa fa-desktop"></span> <span class="xn-text">Trasaction</span></a>                        
+                        <a href="pages-transaction.php"><span class="fa fa-desktop"></span> <span class="xn-text">Trasaction</span></a>                        
                     </li>       
                     <li class="active">
-                        <a href="pages-history.html"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
+                        <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
                     <li class="active">
-                        <a href="pages-mobile-money.html"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
+                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
                     </li>   
                     <li class="active">
-                        <a href="pages-settings.html"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
-                    </li>          
+                        <a href="pages-settings.php"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
+                    </li>         
+                    
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>
@@ -64,29 +85,31 @@
             <!-- PAGE CONTENT -->
             <div class="page-content">
                 
-              <!-- START X-NAVIGATION VERTICAL -->
+                <!-- START X-NAVIGATION VERTICAL -->
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <!-- TOGGLE NAVIGATION -->
-                
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
                     <!-- END TOGGLE NAVIGATION -->
+                    
                     <!-- SIGN OUT -->
                     <li class="xn-icon-button pull-right">
                         <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                     </li> 
                     <li>
-                        <a href="pages-profile.html"><span style ="margin-top: 2px; float: right;">shadow-code</span></a>                        
+                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"])) echo $_SESSION[
+                        "username"]; ?></span></a>                        
                     </li> 
-
                     <!-- END SIGN OUT -->
                     
-                   
                 </ul>
                 <!-- END X-NAVIGATION VERTICAL -->                     
      
                 
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Dashboard</a></li>                    
+                    <li><a href="index.php">Dashboard</a></li>                    
                     <li class="active">History</li>
                 </ul>
                 <!-- END BREADCRUMB -->
@@ -106,7 +129,6 @@
                                 <div class="panel-heading">                                
                                     <h3 class="panel-title">History</h3>   
                                     <ul class="panel-controls">
-                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                                         <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                                     </ul>                                
                                 </div>
@@ -319,7 +341,7 @@
                     </div>
                     <div class="mb-footer">
                         <div class="pull-right">
-                            <a href="pages-login.html" class="btn btn-success btn-lg">Yes</a>
+                            <a href="pages-login.php" class="btn btn-success btn-lg">Yes</a>
                             <button class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>

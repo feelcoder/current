@@ -1,8 +1,13 @@
+<?php error_reporting(E_ALL ^ E_DEPRECATED);
+mysql_pconnect("localhost","root","00school");
+mysql_select_db("test");
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>        
         <!-- META SECTION -->
-        <title>QUICK MONEY TRANSFER </title>            
+        <title>Quick Money Transfer - home</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,39 +28,55 @@
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="../front-end/index.html">Quick Money</a>
-                        <a href="" class="x-navigation-control"></a>
+                        <a href="../index.php">Quick Money Transfer</a>
+                        <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
-                        
                         <div class="profile">
                             <div class="profile-image">
-                                <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
-                            </div>
-                            <div class="profile-data">
-                                <div class="profile-data-name">shadow-code</div>
-                                <div class="profile-data-title">Hacker and Cracker</div>
-                                
-                            </div>
-                            
+                                <!-- start php -->
+                                <?php
+                                    //get user profile picture
+                                    if(isset($_SESSION["username"]))
+                                    {
+                                        $username = $_SESSION["username"];
+                                        $r = mysql_query('select profile_picture from users where username="'.$username.'"');
+                                        $x = mysql_query('select description from users where username="'.$username.'"');
+                                        $description = mysql_result($x, 0);
+
+                                        if(!$x)
+                                            die(mysql_error());
+                                        if(!$r)
+                                            die(mysql_error());
+                                        
+                                        $path = mysql_result($r, 0);
+                                        echo '<img src="'.$path.'" alt="profile_picture"/>
+                                </div>
+                                <div class="profile-data">
+                                    <div class="profile-data-name">'.$username.'</div>
+                                    <div class="profile-data-title">'.$description.'</div>
+                                </div>';
+                                    }
+                            ?>
                         </div>                                                                        
                     </li>
                     <li class="xn-title">Navigation</li>
                     <li class="active">
-                        <a href="index.html"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>                        
+                        <a href="index.php"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>                        
                     </li> 
                     <li class="active">
-                        <a href="pages-transaction.html"><span class="fa fa-desktop"></span> <span class="xn-text">Trasaction</span></a>                        
+                        <a href="pages-transaction.php"><span class="fa fa-desktop"></span> <span class="xn-text">Trasaction</span></a>                        
                     </li>       
                     <li class="active">
-                        <a href="pages-history.html"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
+                        <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
                     <li class="active">
-                        <a href="pages-mobile-money.html"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
+                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
                     </li>   
                     <li class="active">
-                        <a href="pages-settings.html"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
-                    </li>          
+                        <a href="pages-settings.php"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
+                    </li>         
+                    
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>
@@ -67,24 +88,27 @@
                 <!-- START X-NAVIGATION VERTICAL -->
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <!-- TOGGLE NAVIGATION -->
-                
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
                     <!-- END TOGGLE NAVIGATION -->
+                    
                     <!-- SIGN OUT -->
                     <li class="xn-icon-button pull-right">
                         <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                     </li> 
                     <li>
-                        <a href="pages-profile.html"><span style ="margin-top: 2px; float: right;">shadow-code</span></a>                        
+                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"])) echo $_SESSION[
+                        "username"]; ?></span></a>                        
                     </li> 
-
                     <!-- END SIGN OUT -->
                     
-                   
                 </ul>
                 <!-- END X-NAVIGATION VERTICAL -->                     
 
                 <!-- START BREADCRUMB -->
-                <ul class="breadcrumb">                 
+                <ul class="breadcrumb">
+                    <li><a href="index.php">Dashboard</a></li>                    
                     <li class="active">Dashboard</li>
                 </ul>
                 <!-- END BREADCRUMB -->                       
@@ -94,7 +118,7 @@
                     
                     <!-- START WIDGETS -->                    
                     <div class="row">
-                        <div class="col-md-3">
+                         <div class="col-md-3">
                             
                             <!-- START WIDGET SLIDER -->
                             <div class="widget widget-default widget-carousel">
@@ -111,12 +135,10 @@
                                         <div class="widget-title">Favorite receiver</div>
                                         <div class="widget-int">Antonia</div>
                                     </div>
-                                </div>                            
-                                <div class="widget-controls">                                
-                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
-                                </div>                             
+                                </div>                                                        
                             </div> 
-                            <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
                             
                             <!-- START WIDGET CLOCK -->
                             <div class="widget widget-danger widget-padding-sm">
@@ -139,10 +161,8 @@
                             </div>                        
                             <!-- END WIDGET CLOCK -->
                             
-                        </div>        
-                            <!-- END WIDGET SLIDER -->
-                            
                         </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-4">
                             
@@ -163,37 +183,6 @@
                                 </div>
                             </div>
                             <!-- END SALES & EVENTS BLOCK -->
-                            
-                        </div>
-                        <div class="col-md-4">
-                            
-                            <!-- START USERS ACTIVITY BLOCK -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="panel-title-box">
-                                        <h3>Other users Activity</h3>
-                                    </div>                                    
-                                    <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>                                        
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                            </ul>                                        
-                                        </li>                                        
-                                    </ul>                                    
-                                </div>                                
-                                <div class="panel-body padding-0">
-                                    <div class="chart-holder" id="dashboard-bar-1" style="height: 200px;"></div>
-                                </div>                                    
-                            </div>
-                            <!-- END USERS ACTIVITY BLOCK -->
-                            
-                        </div>
-                        <div class="col-md-4">
-                            
                             <!-- START VISITORS BLOCK -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -202,14 +191,7 @@
                                     </div>
                                     <ul class="panel-controls" style="margin-top: 2px;">
                                         <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>                                        
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                            </ul>                                        
-                                        </li>                                        
+                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>                                      
                                     </ul>
                                 </div>
                                 <div class="panel-body padding-0">
@@ -217,18 +199,12 @@
                                 </div>
                             </div>
                             <!-- END VISITORS BLOCK -->
-                            
                         </div>
+                       
+                        
                     </div>
                     
-                    <!-- START DASHBOARD CHART -->
-                    <div class="block-full-width">
-                        <div id="dashboard-chart" style="height: 250px; width: 100%; float: left;"></div>
-                        <div class="chart-legend">
-                            <div id="dashboard-legend"></div>
-                        </div>                                                
-                    </div>                    
-                    <!-- END DASHBOARD CHART -->
+                    
                     
                 </div>
                 <!-- END PAGE CONTENT WRAPPER -->                                
@@ -248,7 +224,7 @@
                     </div>
                     <div class="mb-footer">
                         <div class="pull-right">
-                            <a href="pages-login.html" class="btn btn-success btn-lg">Yes</a>
+                            <a href="pages-login.php" class="btn btn-success btn-lg">Yes</a>
                             <button class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>
@@ -293,14 +269,116 @@
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>
         
-        <script type="text/javascript" src="js/demo_dashboard.js"></script>
+        <!-- <script type="text/javascript" src="js/demo_dashboard.js"></script>-->
         <!-- END TEMPLATE -->
     <!-- END SCRIPTS -->         
     </body>
 </html>
+<?php
+echo '
+<script type="text/javascript">
+$(function(){        
+    /* reportrange */
+    if($("#reportrange").length > 0){   
+        $("#reportrange").daterangepicker({                    
+            ranges: {
+               "Today": [moment(), moment()],
+               "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+               "Last 7 Days": [moment().subtract(6, "days"), moment()],
+               "Last 30 Days": [moment().subtract(29, "days"), moment()],
+               "This Month": [moment().startOf("month"), moment().endOf("month")],
+               "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+            },
+            opens: "left",
+            buttonClasses: ["btn btn-default"],
+            applyClass: "btn-small btn-primary",
+            cancelClass: "btn-small",
+            format: "MM.DD.YYYY",
+            separator: " to ",
+            startDate: moment().subtract("days", 29),
+            endDate: moment()            
+          },function(start, end) {
+              $("#reportrange span").php(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
+        });
+        
+        $("#reportrange span").php(moment().subtract("days", 29).format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY"));
+    }
+    /* end reportrange */';
 
+    /* Donut dashboard chart */
+    
+    $result = "select name,id from agencies";
+    $details = array();
 
+    while($row = mysql_fetch_array($result))
+    {
+        $r = mysql_query("select count(*) from history where agency_id=".$row[1]);
+        $a = mysql_result($row,0);
+        $b = mysql_result($r,0);
 
+        echo 'alert("test")';
+        array_push($details, array("name" => $a, "count" => $b));
+    }
+
+    echo '
+    Morris.Donut({
+        element: "dashboard-donut-1",
+        data:[';
+        $i = 0;
+        for($i = 0; i < count($details) - 1; $i++)
+            echo '{label: "'.$details[$i]["name"].'" , value: '.$details[$i]["count"].'}';
+        echo '{label: "'.$details[$i]["name"].'" , value: '.$details[$i]["count"].'}
+        ],
+        colors: [';
+        for($i = 0; i < count($details) - 1; $i++)
+            if($i%2 == 0)
+                echo '"33414E",';
+            else if($i%3 == 0)
+                echo '"3FBAE4",';
+            else
+                echo '"FEA223",';
+            echo '"3FBAE4"],
+        resize: true
+    });
+    /* END Donut dashboard chart */
+
+    /* Line dashboard chart */
+    Morris.Line({
+      element: "dashboard-line-1",
+      data: [';
+
+        $result = mysql_query("select date from history");
+        $r = mysql_result($result, 0);  //first date of transaction
+
+        $time=strtotime($r);
+        $month=date("F",$time);
+        $year=date("Y",$time);
+        echo '{ y: "", a: 2},
+
+      ],
+      xkey: "y",
+      ykeys: ["a"],
+      labels: ["Trasnfers",],
+      resize: true,
+      hideHover: true,
+      xLabels: "Month",
+      gridTextSize: "10px",
+      lineColors: ["#3FBAE4","#33414E"],
+      gridLineColor: "#E5E5E5"
+    });   
+    /* EMD Line dashboard chart */
+    
+    
+    $(".x-navigation-minimize").on("click",function(){
+        setTimeout(function(){
+            rdc_resize();
+        },200);    
+    });
+    
+    
+});
+</script>';
+?>
 
 
 

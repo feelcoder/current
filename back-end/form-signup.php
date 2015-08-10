@@ -1,3 +1,8 @@
+<?php error_reporting(E_ALL ^ E_DEPRECATED);
+mysql_pconnect("localhost","root","00school");
+mysql_select_db("test");
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>        
@@ -23,7 +28,7 @@
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="front-end/index.html">Quick Money Transfer</a>
+                        <a href="../index.php">Quick Money Transfer</a>
                     </li>
                     
                     
@@ -37,8 +42,8 @@
                 
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
-                    <li><a href="front-end/index.html">Home</a></li>
-                    <li><a href="pages-login.html">Sing In</a></li>
+                    <li><a href="../index.php">Home</a></li>
+                    <li><a href="pages-login.php">Sing In</a></li>
                     <li class="active">Create Account/li>
                 </ul>
                 <!-- END BREADCRUMB -->
@@ -57,7 +62,7 @@
 
                             <!-- START VALIDATIONENGINE PLUGIN -->
                             <div class="block">                              
-                                <form id="validate" role="form" class="form-horizontal" action="index.html">                            
+                                <form id="validate" role="form" class="form-horizontal" action="index.php">                            
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Username:</label>
                                         <div class="col-md-9">

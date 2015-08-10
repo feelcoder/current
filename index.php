@@ -1,3 +1,5 @@
+<?php error_reporting(E_ALL ^ E_DEPRECATED);
+session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,7 +28,7 @@
                     
                     <!-- page logo -->
                     <div class="logo">
-                        <a href="index.html">Quick Money Transfer</a>
+                        <a href="index.php">Quick Money Transfer</a>
                     </div>
                     <!-- ./page logo -->
             
@@ -39,10 +41,17 @@
                     
                     <!-- navigation -->
                     <ul class="navigation">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="contacts.html">Contact Us</a></li>
-                        <li><a href="back-end/pages-login.html">Sign in/Create Account</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="about-us.php">About Us</a></li>
+                        <li><a href="contacts.php">Contact Us</a></li>
+                        <?php
+                        //check if session is on
+                    
+                        if(isset($_SESSION["username"]))
+                            echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
+                        else
+                            echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
+                        ?>
                     </ul>
                     <!-- ./navigation -->                        
 
