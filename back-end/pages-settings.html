@@ -90,9 +90,92 @@
                     <li class="active">Settings</li>
                   
                 </ul>
-                <!-- END BREADCRUMB -->                
-                                
+                <!-- END BREADCRUMB -->         
+
+                <!-- PAGE TITLE -->
+                <div class="page-title">                    
+                    <h2><span class="fa fa-arrow-circle-o-left"></span>Settings</h2>
+                    
+                </div>
+                <!-- END PAGE TITLE -->          
+
+                 <!-- PAGE CONTENT WRAPPER -->
+                <div class="page-content-wrap">                
                 
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <!-- START VALIDATIONENGINE PLUGIN -->
+                            <div class="block">                              
+                                <form id="validate" role="form" class="form-horizontal" action="index.html">                            
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Username:</label>
+                                        <div class="col-md-9 form-inline">
+                                            <input type="text" class="validate[required,maxSize[8]] form-control"/> 
+                                            <span class="help-block">Edit<img src="img/edit.png"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Old Password:</label>
+                                        <div class="col-md-9">
+                                            <input type="password" class="validate[required,minSize[5],maxSize[10]] form-control" id="password"/>
+                                            <span class="help-block">Edit<img src="img/edit.png"></span>
+                                        </div>
+                                    </div>                    
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">New Password:</label>
+                                        <div class="col-md-9">
+                                            <input type="password" class="validate[required,equals[password]] form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Confirm New Password:</label>
+                                        <div class="col-md-9">
+                                            <input type="password" class="validate[required,equals[password]] form-control"/>
+                                        </div>
+                                    </div>                                   
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Age:</label>
+                                        <div class="col-md-9    ">
+                                            <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control"/>
+                                            <span class="help-block">Edit<img src="img/edit.png"></span>
+                                        </div>                        
+                                    </div>
+                            
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Phone number:</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="validate[required,custom[integer],min[650000000],max[670000000]] form-control"/>
+                                            <span class="help-block">Edit<img src="img/edit.png"></span>
+                                         
+                                        </div>
+                                    </div>             
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">MTN mobile money number:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control"/>
+                                            <span class="help-block">Edit<img src="img/edit.png"></span>
+                                         
+                                        </div>
+                                    </div>          
+                                           
+                                    <div class="btn-group pull-right">
+                                        <button class="btn btn-primary" type="submit">Change</button>
+                                    </div>          
+                                    <!-- Still TODO : code javascript ask user if the want to leave page ... and to wipe all forms -->
+                                    <div class="btn-group pull-left">
+                                    	<button class="btn btn-warning" >Cancel</button>                                                      
+                                </form>
+                            </div>                                               
+                            <!-- END VALIDATIONENGINE PLUGIN -->
+
+                        </div>
+                        
+                        </div>
+                    </div>
+                        
+                </div>
+                <!-- END PAGE CONTENT WRAPPER -->                
             </div>            
             <!-- END PAGE CONTENT -->
         </div>
