@@ -45,10 +45,12 @@ session_start(); ?>
                         <li><a href="contacts.php">Contact Us</a></li>
                         <?php
                         //check if session is on
+                    
                         if(isset($_SESSION["username"]))
-                            echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
-                        else
-                            echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
+                            if($_SESSION["username"] != "off")
+                                echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
+                            else
+                                echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
                         ?>
                     </ul>
                     <!-- ./navigation -->  
@@ -99,7 +101,7 @@ session_start(); ?>
                                     <div class="text-column-image">
                                         <img src="assets/img/users/user2.jpg" alt="John Doe" class="img-circle">
                                     </div>
-                                    <h5>Acha Bill</h5>
+                                    <h6>Acha Bill</h6>
                                     <div class="text-column-subtitle">Founder of Atlant</div>
                                     <div class="text-column-info">
                                         Software Developer and UI and UX developer
@@ -112,7 +114,7 @@ session_start(); ?>
                                     <div class="text-column-image">
                                         <img src="assets/img/users/user4.jpg" alt="Brad Pitt" class="img-circle">
                                     </div>
-                                    <h5>Daniel Carlson</h5>
+                                    <h6>Daniel Carlson</h6>
                                     <div class="text-column-subtitle">Co-Founder of Atlant</div>
                                     <div class="text-column-info">
                                        Software Developer and backend engineer
