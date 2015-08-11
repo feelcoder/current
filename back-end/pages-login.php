@@ -1,6 +1,16 @@
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 mysql_pconnect("localhost","root","00school");
 mysql_select_db("test");
+
+//clear any running session
+if(isset($_SESSION["username"]))
+{
+    if (isset( $_COOKIE[session_name()])) 
+        setcookie( session_name(), "", time()-3600, "/" );
+$_SESSION = array();
+session_destroy();
+}
+//start new session
 session_start();
 ?>
 <!DOCTYPE html>

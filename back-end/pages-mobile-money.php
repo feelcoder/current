@@ -32,7 +32,7 @@ session_start();
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="index.php">Quick Money Transfer</a>
+                        <a href="../index.php">Quick Money Transfer</a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
