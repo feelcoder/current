@@ -3,9 +3,44 @@ mysql_pconnect("localhost","root","00school");
 mysql_select_db("test");
 session_start();
 
+//store these  variables for use in the next pages
 if(isset($_POST["submit"]))
 {
-    $_SESSION['']
+    $user = '';
+    $receiver = '';
+    $receiver_number = '';
+    $mobile_money_number = '';
+    $amount = '';
+    $date = '';
+    $location = '';
+
+    if(isset($_POST['username']))
+        $user = $_POST['username'];
+    if(isset($_POST['receiver']))
+        $receiver = $_POST['receiver'];
+    if(isset($_POST['receiver_number']))
+        $receiver_number = $_POST['receiver_number'];
+    if(isset($_POST['mobile_money_number']))
+        $mobile_money_number = $_POST['mobile_money_number'];
+    if(isset($_POST['amount']))
+        $amount = $_POST['amount'];
+    if(isset($_POST['date']))
+        $date = $_POST['date'];
+
+    if(!$user != '')
+        $_SESSION['user'] = $user;
+    if(!$receiver != '')
+        $_SESSION['receiver'] = $receiver;
+    if(!$receiver_number != '')
+        $_SESSION['receiver_number'] = $receiver_number;
+    if(!$mobile_money_number != '')
+        $_SESSION['mobile_money_number'] = $mobile_money_number;
+    if(!$amount != '')
+        $_SESSION['amount'] = $amount;
+    if(!$date != '')
+        $_SESSION['date'] = $date;
+    if(!$location != '')
+        $_SESSION['location'] = $location;
 }
 ?>
 <!DOCTYPE html>
@@ -131,7 +166,7 @@ if(isset($_POST["submit"]))
                 
                 <!-- PAGE TITLE -->
                 <div class="page-title">                  
-                    <h2><span class="fa fa-arrow-circle-o-left"><?php if(isset($_SESSION["name"])) echo $_SESSION['name']; ?></span></h2>
+                    <h2><span class="fa fa-arrow-circle-o-left"><?php if(isset($_SESSION["agency"])) echo $_SESSION["agency"]; ?></span></h2>
                 </div>
                 <!-- END PAGE TITLE -->                
                 
@@ -180,7 +215,7 @@ if(isset($_POST["submit"]))
                                     <div class="form-group">
                                     <label class="col-md-3 control-label">Today:</label>  
                                         <div class="col-md-9">
-                                            <input type="text" class="mask_date form-control" value="" name="date"/>
+                                            <input type="text" class="mask_date form-control" value="<?php echo date("Y-m-d"); ?>" name="date"/>
                                             <span class="help-block">Example: 2012-12-21</span>         
                                         </div>
                                     </div>
