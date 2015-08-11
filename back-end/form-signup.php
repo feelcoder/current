@@ -2,6 +2,51 @@
 mysql_pconnect("localhost","root","00school");
 mysql_select_db("test");
 session_start();
+
+$username = '';
+$password ='';
+$gender = '';
+$age = '';
+$description = '';
+$phone_number = '';
+$mobile_money_number = '';
+$GLOBALS['exist'] = "false";
+
+if(isset($_POST['submit']))
+{
+    if(isset($_POST['username']))
+        $username = $_POST['username'];
+    if(isset($_POST['password']))
+        $password = $_POST['password'];
+    if(isset($_POST['gender']))
+        $gender = $_POST['gender'];
+    if(isset($_POST['age']))
+        $age = $_POST['age'];
+    if(isset($_POST['phone_number']))
+        $phone_number = $_POST['phone_number'];
+    if(isset($_POST['mobile_money_number']))
+        $mobile_money_number = $_POST['mobile_money_number'];
+    if(isset($_POST['description']))
+        $description = $_POST['description'];
+
+    $a = mysql_query('select count(*) from users where username = "'.$username.'"');
+    if($a)
+        $b = mysql_result($a,0);
+    else 
+        header("Location: pages-error-500.html");
+
+    if($b != 0) //username exists
+        $GLOBALS['exist'] = "true";
+    else
+    {
+        $hash = hash('sha512',$password); 
+        $a = mysql_query('insert into users values (null,"'.$username.'","'.$hash.'","'.$description.'","'.$gender.'",'.$age.',"./assets/images/users/profile_default","'.$phone_number.'","'.$mobile_money_number.'"');
+        if(!$a)
+            header("Location: pages-error-500.html");
+        $_SESSION['username'] = $username;
+        header("Location: pages-error-500.html");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +89,7 @@ session_start();
                 <ul class="breadcrumb">
                     <li><a href="../index.php">Home</a></li>
                     <li><a href="pages-login.php">Sing In</a></li>
-                    <li class="active">Create Account/li>
+                    <li class="active">Create Account</li>
                 </ul>
                 <!-- END BREADCRUMB -->
                 
@@ -62,19 +107,23 @@ session_start();
 
                             <!-- START VALIDATIONENGINE PLUGIN -->
                             <div class="block">                              
-                                <form id="validate" role="form" class="form-horizontal" action="index.php">                            
+                                <form id="validate" role="form" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">                            
                                     <div class="form-group">
+                                        <?php
+                                            if($GLOBALS['exist'] == "true")
+                                                echo '<p><style="color: red;"><strong>Username exists already</strong></style></p>';
+                                        ?>
                                         <label class="col-md-3 control-label">Username:</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="validate[required,maxSize[8]] form-control"/>
-                                            <span class="help-block">Required, max size = 100</span>
+                                            <input type="text" class="validate[required,maxSize[20]] form-control" name="username"/>
+                                            <span class="help-block">Required, max size = 20</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Password:</label>
                                         <div class="col-md-9">
-                                            <input type="password" class="validate[required,minSize[5],maxSize[10]] form-control" id="password"/>
-                                            <span class="help-block">Required, min size = 5, max size = 10</span>
+                                            <input type="password" class="validate[required,minSize[8],maxSize[10]] form-control" id="password" name="password"/>
+                                            <span class="help-block">Required, min size = 8, max size = 10</span>
                                         </div>
                                     </div>                    
                                     <div class="form-group">
@@ -87,14 +136,14 @@ session_start();
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Age:</label>
                                         <div class="col-md-9    ">
-                                            <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control"/>
+                                            <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control" name="age"/>
                                             <span class="help-block">Required, integer, min value = 18, max = 120</span>
                                         </div>                        
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Gender:</label>
                                         <div class="col-md-3">
-                                            <select class="validate[required] select" id="formGender">
+                                            <select class="validate[required] select" id="formGender" name="gender">
                                                 <option value="">Choose option</option>
                                                 <option value="1">Male</option>
                                                 <option value="0">Female</option>
@@ -102,18 +151,24 @@ session_start();
                                             <span class="help-block">Required</span>
                                         </div>                        
                                     </div>
-                            
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Tag</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="validate[false,maxSize[20]] form-control" placeholder="Just a user" name="description"/>
+                                            <span class="help-block">A sentence defining you</span>
+                                        </div>
+                                    </div>    
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Phone number:</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[670000000]] form-control"/>
+                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="phone_number"/>
                                             <span class="help-block">Required, phone number</span>
                                         </div>
                                     </div>             
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">MTN mobile money number:</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control"/>
+                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="mobile_money_number"/>
                                             <span class="help-block">Required, mobile money number</span>
                                         </div>
                                     </div>          
@@ -127,7 +182,7 @@ session_start();
                                         </div>
                                     </div>                                
                                     <div class="btn-group pull-right">
-                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                        <button class="btn btn-primary" type="button" name="submit">Submit</button>
                                     </div>                                                                
                                 </form>
                             </div>                                               
@@ -190,14 +245,14 @@ session_start();
                         },
                         password: {
                                 required: true,
-                                minlength: 5,
+                                minlength: 8,
                                 maxlength: 10
                         },
                         're-password': {
                                 required: true,
-                                minlength: 5,
+                                minlength: 8,
                                 maxlength: 10,
-                                equalTo: "#password2"
+                                equalTo: "#password"
                         },
                         age: {
                                 required: true,

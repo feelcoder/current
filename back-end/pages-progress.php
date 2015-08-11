@@ -2,6 +2,8 @@
 mysql_pconnect("localhost","root","00school");
 mysql_select_db("test");
 session_start();
+
+$_SESSION["mobile_money"] = "on";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,11 +108,12 @@ session_start();
                 </ul>
                 <!-- END X-NAVIGATION VERTICAL -->                   
                 
-       <!-- START BREADCRUMB -->
+                <!-- You can no longer return once arrived here -->
+                <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
-                    <li><a href="index.php">Dashboard</a></li>
-                    <li><a href="pages-transaction.php">Select agency</a></li>
-                    <li><a href="form-payment-form.php">sending form</a></li>
+                    <li class="active">Dashboard</a></li>
+                    <li class="active">Select agency</a></li>
+                    <li class="active">sending form</a></li>
                     <li class="active">progress</li>
                 </ul>
                 <!-- END BREADCRUMB -->                
@@ -120,11 +123,31 @@ session_start();
                             </div>
                             <div class="panel-body list-group scroll" style="height: 200px;">                                
                                 <a class="list-group-item" href="#">
-                                    <strong>Sending money..</strong>
+                                    <!-- simulate mobile money transfer -->
+                                    <?php
+                                        if(isset($_SESSION["mobile_money"]) && if($_SESSION["mobile_money"]) == "on")
+                                        {
+                                                echo '<strong>Sending money.. Answer SMS confirmation</strong>
                                     <div class="progress progress-xlarge progress-striped active">
                                         <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">90%</div>
                                     </div>
-                                    <small class="text-muted">Antonia, 23 Sep 2014 / 95%</small>
+                                    <small class="text-muted">'.if(isset($_SESSION["receiver_name"])) echo $_SESSION["receiver_name"].', '.$if(isset($_SESSION["date"])) echo $_SESSION["date"] .'/ 90%</small>';
+                                        for($i = 0; $i < 10000000; $i++)
+                                            ;
+                                            $_SESSION["mobile_money"] = "off";
+                                            header("Location: pages-progress.php");
+                                        }
+                                        else
+                                        {
+                                            if(isset($_SESSION["mobile_money"]) && $_SESSION["mobile_money"]=="off")
+                                                    echo '<strong>SUCCESS!</strong>
+                                    <div class="progress progress-xlarge progress-striped active">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">10%</div>
+                                    </div>
+                                    <small class="text-muted">'.if(isset($_SESSION["receiver_name"])) echo $_SESSION["receiver_name"].', '.$if(isset($_SESSION["date"])) echo $_SESSION["date"] .'/ 100%</small>';
+                                        }
+                                    ?>
+                                    <!-- end simulation -->
                                 </a>
                                 
                             </div>                                

@@ -2,6 +2,11 @@
 mysql_pconnect("localhost","root","00school");
 mysql_select_db("test");
 session_start();
+
+if(isset($_POST["submit"]))
+{
+    $_SESSION['']
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,23 +45,26 @@ session_start();
                                     if(isset($_SESSION["username"]))
                                     {
                                         $username = $_SESSION["username"];
-                                        $r = mysql_query('select profile_picture from users where username="'.$username.'"');
-                                        $x = mysql_query('select description from users where username="'.$username.'"');
-                                        $description = mysql_result($x, 0);
+                                        if($username != "off")
+                                        {
+                                            $r = mysql_query('select profile_picture from users where username="'.$username.'"');
+                                            $x = mysql_query('select description from users where username="'.$username.'"');
+                                            $description = mysql_result($x, 0);
 
-                                        if(!$x)
-                                            die(mysql_error());
-                                        if(!$r)
-                                            die(mysql_error());
-                                        
-                                        $path = mysql_result($r, 0);
-                                        echo '<img src="'.$path.'" alt="profile_picture"/>
-                                </div>
-                                <div class="profile-data">
-                                    <div class="profile-data-name">'.$username.'</div>
-                                    <div class="profile-data-title">'.$description.'</div>
-                                </div>';
+                                            if(!$x)
+                                                die(mysql_error());
+                                            if(!$r)
+                                                die(mysql_error());
+                                            
+                                            $path = mysql_result($r, 0);
+                                            echo '<img src="'.$path.'" alt="profile_picture"/>
+                                    </div>
+                                    <div class="profile-data">
+                                        <div class="profile-data-name">'.$username.'</div>
+                                        <div class="profile-data-title">'.$description.'</div>
+                                    </div>';
                                     }
+                                }
                             ?>
                         </div>                                                                        
                     </li>
@@ -98,7 +106,7 @@ session_start();
                         <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                     </li> 
                     <li>
-                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"])) echo $_SESSION[
+                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"]) && $_SESSION["username"] != "off") echo $_SESSION[
                         "username"]; ?></span></a>                        
                     </li> 
                     <!-- END SIGN OUT -->
@@ -122,8 +130,8 @@ session_start();
                 <!-- END BREADCRUMB -->
                 
                 <!-- PAGE TITLE -->
-                <div class="page-title">                    
-                    <h2><span class="fa fa-arrow-circle-o-left"></span>Express Exchange</h2>
+                <div class="page-title">                  
+                    <h2><span class="fa fa-arrow-circle-o-left"><?php if(isset($_SESSION["name"])) echo $_SESSION['name']; ?></span></h2>
                 </div>
                 <!-- END PAGE TITLE -->                
                 
@@ -136,7 +144,6 @@ session_start();
                                     <div class="progress progress-small progress-striped active">
                                         <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 65%;">60%</div>
                                     </div>
-                                    <small class="text-muted">Antonia, 23 Sep 2014 / 60%</small>
                                 </a>
                                 
                             </div>                                
@@ -146,34 +153,34 @@ session_start();
 
                             <!-- START JQUERY VALIDATION PLUGIN -->
                             <div class="block">
-                                <form id="jvalidate" role="form" class="form-horizontal" action="pages-progress.php">
+                                <form id="jvalidate" role="form" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 
                                 <div class="panel-body">                                    
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Username:</label>  
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="login"/>
+                                            <input type="text" class="form-control" value="<?php if(isset($_SESSION["username]") && $_SESSION["username"] != "off") echo $_SESSION["username"]) ?>" name="username"/>
                                             <span class="help-block">min size = 2, max size = 20</span>
                                         </div>
                                     </div>  
                                     <div class="form-group">
                                             <label class="col-md-3 control-label">Mobile Money Number:</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="mask_ssn form-control" value=""/>
+                                                <input type="text" class="mask_ssn form-control" value="" name="mobile_money_number"/>
                                                 <span class="help-block">Example: 679-87-6543</span>
                                             </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Amount:</label>
                                         <div class="col-md-9">
-                                            <input type="text"  value=""/>
+                                            <input type="text"  value="" name="amount"/>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>          
                                     <div class="form-group">
                                     <label class="col-md-3 control-label">Today:</label>  
                                         <div class="col-md-9">
-                                            <input type="text" class="mask_date form-control" value=""/>
+                                            <input type="text" class="mask_date form-control" value="" name="date"/>
                                             <span class="help-block">Example: 2012-12-21</span>         
                                         </div>
                                     </div>
@@ -181,28 +188,28 @@ session_start();
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Name of Receiver:</label>  
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="login"/>
+                                            <input type="text" class="form-control" name="receiver"/>
                                             <span class="help-block">min size = 2, max size = 20</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Town:</label>  
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="login"/>
+                                            <input type="text" class="form-control" name="location"/>
                                             <span class="help-block">min size = 2, max size = 20</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                             <label class="col-md-3 control-label">Phone Number:</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="mask_ssn form-control" value=""/>
+                                                <input type="text" class="mask_ssn form-control" value="" name="receiver_number"/>
                                                 <span class="help-block">Example: 679-87-6543</span>
                                             </div>
                                     </div>
 
-                                    <a href="pages-transaction.php" style ="float: left;"><input type="button" value="back" /><a/>    
+                                    <a href="pages-transaction.php" style ="float: left;"><input type="button" class="btn btn-info btn-block" value="back" /><a/>    
                                     <div class="btn-group pull-right">
-                                        <a href="pages-progress.php"><button class="btn btn-primary" type="submit">Submit</button></a>
+                                        <button class="btn btn-primary" type="submit" name="submit">Submit</button>
                                     </div>  
                                 </div>  
                                 </form>

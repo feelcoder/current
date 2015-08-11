@@ -40,23 +40,26 @@ session_start();
                                     if(isset($_SESSION["username"]))
                                     {
                                         $username = $_SESSION["username"];
-                                        $r = mysql_query('select profile_picture from users where username="'.$username.'"');
-                                        $x = mysql_query('select description from users where username="'.$username.'"');
-                                        $description = mysql_result($x, 0);
+                                        if($username != "off")
+                                        {
+                                            $r = mysql_query('select profile_picture from users where username="'.$username.'"');
+                                            $x = mysql_query('select description from users where username="'.$username.'"');
+                                            $description = mysql_result($x, 0);
 
-                                        if(!$x)
-                                            die(mysql_error());
-                                        if(!$r)
-                                            die(mysql_error());
-                                        
-                                        $path = mysql_result($r, 0);
-                                        echo '<img src="'.$path.'" alt="profile_picture"/>
-                                </div>
-                                <div class="profile-data">
-                                    <div class="profile-data-name">'.$username.'</div>
-                                    <div class="profile-data-title">'.$description.'</div>
-                                </div>';
+                                            if(!$x)
+                                                die(mysql_error());
+                                            if(!$r)
+                                                die(mysql_error());
+                                            
+                                            $path = mysql_result($r, 0);
+                                            echo '<img src="'.$path.'" alt="profile_picture"/>
+                                    </div>
+                                    <div class="profile-data">
+                                        <div class="profile-data-name">'.$username.'</div>
+                                        <div class="profile-data-title">'.$description.'</div>
+                                    </div>';
                                     }
+                                }
                             ?>
                         </div>                                                                        
                     </li>
@@ -98,7 +101,7 @@ session_start();
                         <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                     </li> 
                     <li>
-                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"])) echo $_SESSION[
+                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"]) && $_SESSION["username"] != "off") echo $_SESSION[
                         "username"]; ?></span></a>                        
                     </li> 
                     <!-- END SIGN OUT -->
@@ -316,7 +319,6 @@ $(function(){
         $a = mysql_result($row,0);
         $b = mysql_result($r,0);
 
-        echo 'alert("test")';
         array_push($details, array("name" => $a, "count" => $b));
     }
 
@@ -353,9 +355,8 @@ $(function(){
         $time=strtotime($r);
         $month=date("F",$time);
         $year=date("Y",$time);
-        echo '{ y: "", a: 2},
 
-      ],
+      echo '],
       xkey: "y",
       ykeys: ["a"],
       labels: ["Trasnfers",],

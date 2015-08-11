@@ -1,6 +1,13 @@
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 mysql_pconnect("localhost","root","00school");
 mysql_select_db("test");
+session_start();
+
+if(isset($_POST["submit"]))
+{
+    if(isset($_POST["name"]))   //store the name of the agency used
+        $_SESSION["agency"] = $_POST["name"];
+}   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +34,7 @@ mysql_select_db("test");
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="index.php">Quick Money Transfer</a>
+                        <a href="../index.php">Quick Money Transfer</a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
@@ -39,23 +46,26 @@ mysql_select_db("test");
                                     if(isset($_SESSION["username"]))
                                     {
                                         $username = $_SESSION["username"];
-                                        $r = mysql_query('select profile_picture from users where username="'.$username.'"');
-                                        $x = mysql_query('select description from users where username="'.$username.'"');
-                                        $description = mysql_result($x, 0);
+                                        if($username != "off")
+                                        {
+                                            $r = mysql_query('select profile_picture from users where username="'.$username.'"');
+                                            $x = mysql_query('select description from users where username="'.$username.'"');
+                                            $description = mysql_result($x, 0);
 
-                                        if(!$x)
-                                            die(mysql_error());
-                                        if(!$r)
-                                            die(mysql_error());
-                                        
-                                        $path = mysql_result($r, 0);
-                                        echo '<img src="'.$path.'" alt="profile_picture"/>
-                                </div>
-                                <div class="profile-data">
-                                    <div class="profile-data-name">'.$username.'</div>
-                                    <div class="profile-data-title">'.$description.'</div>
-                                </div>';
+                                            if(!$x)
+                                                die(mysql_error());
+                                            if(!$r)
+                                                die(mysql_error());
+                                            
+                                            $path = mysql_result($r, 0);
+                                            echo '<img src="'.$path.'" alt="profile_picture"/>
+                                    </div>
+                                    <div class="profile-data">
+                                        <div class="profile-data-name">'.$username.'</div>
+                                        <div class="profile-data-title">'.$description.'</div>
+                                    </div>';
                                     }
+                                }
                             ?>
                         </div>                                                                        
                     </li>
@@ -97,7 +107,7 @@ mysql_select_db("test");
                         <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                     </li> 
                     <li>
-                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"])) echo $_SESSION[
+                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"]) && $_SESSION["username"] != "off") echo $_SESSION[
                         "username"]; ?></span></a>                        
                     </li> 
                     <!-- END SIGN OUT -->
@@ -148,6 +158,7 @@ mysql_select_db("test");
                                         $logo = $row[2];
                                         $moto = $row[3];
                                         echo '
+                                        <form action="'.htmlentities($_SERVER["PHP_SELF"]).'" method="post">
                                         <div class="panel panel-default">
                                             <div class="panel-body profile">
                                                 <div class="profile-image">
@@ -158,14 +169,16 @@ mysql_select_db("test");
                                                     <div class="profile-data-title">'.$moto.'</div>
                                                 </div>
                                                 
-                                            </div>                                
+                                            </div>  
+                                            <input type="hidden" value="'.$name.'" name="name" />                            
                                             <div class="panel-body">                                    
                                                 <div>'.$about.'</div>
                                                 <div class="col-md-6">
-                                                    <a href="form-payment-form.php"><button class="btn btn-info btn-block">USE</button></a>
+                                                    <input type="submit" class="btn btn-info btn-block" value="USE" name="submit"/>
                                                 </div>
                                             </div>                                
-                                        </div>';
+                                        </div>
+                                        </form>';
                                         //end agency item
                                     }
                                 ?>

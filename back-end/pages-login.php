@@ -3,13 +3,10 @@ mysql_pconnect("localhost","root","00school");
 mysql_select_db("test");
 
 //clear any running session
+//for some reason, unset was not working
 if(isset($_SESSION["username"]))
-{
-    if (isset( $_COOKIE[session_name()])) 
-        setcookie( session_name(), "", time()-3600, "/" );
-$_SESSION = array();
-session_destroy();
-}
+    $_SESSION["username"] = "off";
+
 //start new session
 session_start();
 ?>
@@ -60,15 +57,11 @@ session_start();
                             if(count($b) <= 1) //username does not exist
                             {
                                 echo '<p style="color: red;"><strong>Username incorrect or does not exist!</strong></p>';
-                                //destroy session
-                                if (isset( $_COOKIE[session_name()])) 
-                                    setcookie( session_name(), "", time()-3600, "/" );
-                                $_SESSION = array();
-                                 session_destroy();
+                                $_SESSION["username"] = "off";
                             }
                             else //username exists
                             {
-                                $d = $password; // hash('sha512',$password);   //hash password
+                                $d = hash('sha512',$password);   //hash password
 
                                 //check if password is correct
                                 if($d == $b[1])
@@ -79,11 +72,7 @@ session_start();
                                 else
                                 {
                                     echo '<p style="color: red;"><strong>Password incorrect!</strong></p>';
-                                    //destroy session
-                                    if (isset( $_COOKIE[session_name()])) 
-                                        setcookie( session_name(), "", time()-3600, "/" );
-                                    $_SESSION = array();
-                                    session_destroy();
+                                    $_SESSION["username"] = "off";
                                 }
                             }
                         }
