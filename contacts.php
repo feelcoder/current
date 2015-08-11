@@ -45,10 +45,12 @@ session_start();?>
                         <li><a href="contacts.php">Contact Us</a></li>
                         <?php
                         //check if session is on
+                    
                         if(isset($_SESSION["username"]))
-                            echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
-                        else
-                            echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
+                            if($_SESSION["username"] != "off")
+                                echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
+                            else
+                                echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
                         ?>
                     </ul>
                     <!-- ./navigation -->                        

@@ -48,9 +48,10 @@ session_start(); ?>
                         //check if session is on
                     
                         if(isset($_SESSION["username"]))
-                            echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
-                        else
-                            echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
+                            if($_SESSION["username"] != "off")
+                                echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
+                            else
+                                echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
                         ?>
                     </ul>
                     <!-- ./navigation -->                        
@@ -397,20 +398,25 @@ session_start(); ?>
                                         Limbe, Cameroon,<br/> 
                                         Buea, Cameroon
                                     </div>
-                                    <div class="fc-row">
-                                        <span class="fa fa-phone"></span>
-                                        +237 6 xx xx xx
-                                    </div>
+                    
                                     <div class="fc-row">
                                         <span class="fa fa-envelope"></span>
                                         <strong>Bill Acha</strong><br>
                                         <a href="mailto:#">achabill12@gmail.com</a>
-                                    </div>          
+                                    </div>    
+                                    <div class="fc-row">
+                                        <span class="fa fa-phone"></span>
+                                        +237 6 79 87 34 01
+                                    </div>      
                                     <div class="fc-row">
                                         <span class="fa fa-envelope"></span>
                                         <strong>Daniel Carlson</strong><br>
                                         <a href="mailto:#">dancarl257@gmail.com/a>
-                                    </div>                                   
+                                    </div>    
+                                    <div class="fc-row">
+                                        <span class="fa fa-phone"></span>
+                                        +237 6 xx xx xx
+                                    </div>                               
                                 </div>
                             </div>
                             <!-- ./contacts -->
