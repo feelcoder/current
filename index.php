@@ -52,6 +52,8 @@ session_start(); ?>
                                 echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
                             else
                                 echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
+                        else
+                            echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
                         ?>
                     </ul>
                     <!-- ./navigation -->                        
