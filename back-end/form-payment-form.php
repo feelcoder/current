@@ -194,7 +194,7 @@ if(isset($_POST["submit"]))
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Username:</label>  
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" value="<?php if(isset($_SESSION["username]") && $_SESSION["username"] != "off") echo $_SESSION["username"]) ?>" name="username"/>
+                                            <input type="text" class="form-control" value="<?php if(isset($_SESSION["username]") && $_SESSION["username"] != "off") echo $_SESSION["username"] ?>" name="username"/>
                                             <span class="help-block">min size = 2, max size = 20</span>
                                         </div>
                                     </div>  
