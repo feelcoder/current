@@ -249,11 +249,11 @@ session_start();?>
         
         <script type="text/javascript">
             
-            var mapCords = new google.maps.LatLng(37.751117, -122.423095);
+            var mapCords = new google.maps.LatLng(4.156174, 9.288320);
             var mapOptions = {zoom: 14,center: mapCords, mapTypeId: google.maps.MapTypeId.ROADMAP}    
             var map = new google.maps.Map(document.getElementById("google-map"), mapOptions);
 
-            var cords = new google.maps.LatLng(37.751117, -122.423095);
+            var cords = new google.maps.LatLng(4.156174, 9.288320);
             var marker = new google.maps.Marker({position: cords, 
                                                  map: map, 
                                                  title: "Marker 1",
