@@ -1,6 +1,8 @@
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
-mysql_pconnect("localhost","root","00school");
-mysql_select_db("test");
+$connection = mysql_pconnect("localhost","test","test");
+     if(!$connection)
+        header("Location: pages-error-500.php");
+    mysql_select_db("test");
 
 //clear any running session
 //for some reason, unset was not working
@@ -38,12 +40,6 @@ session_start();
                     <div class="form-group">
                         <!-- start login -->
                         <?php
-                        //connect to mysql
-                        $connection = mysql_pconnect("localhost","root","00school");
-                        mysql_select_db("test");
-                        if(!$connection)
-                            header("Location: pages-error-500.php");
-
                         //check username and password
                         if(isset($_POST["username"]) && isset($_POST["password"]))
                         {
