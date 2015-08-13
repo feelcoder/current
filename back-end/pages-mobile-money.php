@@ -1,3 +1,8 @@
+<!--
+    I think i konw what should be here
+    We'll talk about it when we are throught and ready to simulate moblie money
+-->
+
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)

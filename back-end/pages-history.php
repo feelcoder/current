@@ -1,3 +1,7 @@
+<!-- 
+    This works perfectly for me even thought i've not tested with any data.
+-->
+
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
@@ -104,7 +108,7 @@ session_start();
                     
                 </ul>
                 <!-- END X-NAVIGATION VERTICAL -->                     
-                
+
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="index.php">Dashboard</a></li>                    

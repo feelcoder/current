@@ -1,3 +1,8 @@
+<!-- I'll leave this to you.
+    I explained everything that is supposed to be done in the overview file i sent 
+    Hope you'll make good use of your free time
+-->
+
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)

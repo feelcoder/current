@@ -1,3 +1,7 @@
+<!--
+    This is also part of the mobile money process
+-->
+
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)

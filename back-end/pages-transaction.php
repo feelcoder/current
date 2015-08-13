@@ -1,3 +1,8 @@
+<!--
+    This works well. 
+    But i've not tested because there is not data
+-->
+
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)

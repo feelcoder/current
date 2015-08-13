@@ -1,3 +1,6 @@
+<!-- 
+    I hvave not tested this form yet as we have to simulate mobile money payment
+-->
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
@@ -335,9 +338,4 @@ if(isset($_POST["submit_button"]))
         
     </body>
 </html>
-
-
-
-
-
 

@@ -1,3 +1,8 @@
+<!--
+    Sign up is perfect. 
+    Test for any errors
+-->
+
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
 if(!$connection)
@@ -153,8 +158,8 @@ if(isset($_POST['submit_button']))
                                         <div class="col-md-3">
                                             <select class="validate[required] select" id="formGender" name="gender">
                                                 <option value="">Choose option</option>
-                                                <option value="1">Male</option>
-                                                <option value="0">Female</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
                                             </select>                           
                                             <span class="help-block">Required</span>
                                         </div>                        

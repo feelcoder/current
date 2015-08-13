@@ -1,3 +1,12 @@
+<!-- work to be done here
+    1: complete the javascript function above to select image from device gallery for profile picture
+    2: complete change password option.
+    3: Jvalidate checks don't work. Provide javascript front end checks to inputs
+    4: On edit button click, the page reloads and starts from the top.
+        Set the page to focus (jump to) the editing field.
+    5: Then the job here is done.
+-->
+
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
@@ -5,11 +14,8 @@ $connection = mysql_pconnect("localhost","test","test");
     mysql_select_db("test");
 session_start();
 
-if(isset($_POST["submit"]))
-{
-    if(isset($_POST["name"]))   //store the name of the agency used
-        $_SESSION["agency"] = $_POST["name"];
-}   
+if(isset($_POST['submit_button']))
+    header("Location: index.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,14 +67,14 @@ if(isset($_POST["submit"]))
                                             
                                             $path = mysql_result($r, 0);
                                             echo '<img src="'.$path.'" alt="profile_picture"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">'.$username.'</div>
-                                        <div class="profile-data-title">'.$description.'</div>
-                                    </div>';
+                            </div>
+                            <div class="profile-data">
+                                <div class="profile-data-name">'.$username.'</div>
+                                <div class="profile-data-title">'.$description.'</div>
+                            </div>';
+                                        }
                                     }
-                                }
-                            ?>
+                                ?>
                         </div>                                                                        
                     </li>
                     <li class="xn-title">Navigation</li>
@@ -132,75 +138,254 @@ if(isset($_POST["submit"]))
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap">                           
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-3">
+                        <div class="profile">
+                                <div class="profile-image">
+                                    <!-- start php -->
+                                    <?php
+                                    //get user profile picture
+                                    if(isset($_SESSION["username"]))
+                                    {
+                                        $username = $_SESSION["username"];
+                                        if($username != "off")
+                                        {
+                                            $r = mysql_query('select profile_picture from users where username="'.$username.'"');
+                                            $x = mysql_query('select description from users where username="'.$username.'"');
+                                            $description = mysql_result($x, 0);
+
+                                            if(!$x)
+                                                die(mysql_error());
+                                            if(!$r)
+                                                die(mysql_error());
+                                            
+                                            $path = mysql_result($r, 0);
+                                            echo '<img src="'.$path.'" alt="profile_picture"/>
+                                </div>
+                                <div class="profile-data">
+                                    <div class="profile-data-name">'.$username.'</div>
+                                    <div class="profile-data-title">'.$description.'</div>
+                                </div>';
+                                    }
+                                }
+                                ?>
+                                <div class="btn-group pull-left">
+                                    <button class="btn btn-primary" onclick="edit_pofile_picture()">Change Picture</button>
+                                </div> 
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-primary"><a href="#">Change Password</a></button>
+                                </div> 
+                            </div>
+                            </div>
+                        <div class="col-md-6">
+
                             <!-- START VALIDATIONENGINE PLUGIN -->
                             <div class="block">                              
-                                <form id="validate" role="form" class="form-horizontal" action="index.html">                            
+                                <form id="jvalidate" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">                            
                                     <div class="form-group">
+                                        <?php
+                                            if(isset($GLOBALS['exist']))
+                                                if($GLOBALS['exist'] == "true")
+                                                    echo '<p><style="color: red;"><strong>Username exists already</strong></style></p>';
+                                        ?>
                                         <label class="col-md-3 control-label">Username:</label>
-                                        <div class="col-md-9 form-inline">
-                                            <input type="text" class="validate[required,maxSize[8]] form-control"/> 
-                                            <span class="help-block">Edit<img src="img/edit.png"></span>
+                                        <div class="col-md-9">
+                                            <?php 
+
+                                            $current_username = $_SESSION['username'];
+                                            if(isset($_POST['edit_username']))
+                                                echo '    
+                                                <input type="text" class="validate[required,maxSize[20]] form-control" name="username" value="'.$current_username.'"/>
+                                                <span class="help-block">Required, max size = 20</span>
+                                                <div class="btn-group pull-right">
+                                                    <button class="btn btn-primary" type="submit" name="save_username">Save</button>
+                                                </div>';
+                                            
+                                            else if(isset($_POST['save_username']))
+                                            {
+                                                $new_username = $_POST['username'];
+                                                if($new_username != $current_username)
+                                                {
+                                                    $a = mysql_query('select count(*) from users where username = "'.$new_username.'"');
+                                                    if($a)
+                                                        $b = mysql_result($a,0);
+                                                    if($b != 0) //username exists
+                                                        echo '    
+                                                        <p><style="color: red;"><strong>Username exists already</strong></style></p>
+                                                        <input type="text" class="validate[required,maxSize[20]] form-control" name="username" value="'.$current_username.'"/>
+                                                        <div class="btn-group pull-right">
+                                                            <button class="btn btn-primary" type="submit" name="save_username">Save</button>
+                                                        </div>';
+                                                    else
+                                                    {
+                                                        //update database
+                                                        $a = mysql_query('update users set username="'.$new_username.'" where username="'.$current_username.'"');
+                                                        $_SESSION['username'] = $new_username;
+
+                                                        echo '    
+                                                        <input type="text" class="validate[required,maxSize[20]] form-control" name="username" value="'.$new_username.'" disabled/>
+                                                        <button class="help-block" type="submit" id="edit_username" name="edit_username">Edit<img src="img/edit.png"/></button>
+                                                        ';
+                                                    }
+                                                }
+                                            }
+                                            else
+                                                echo '    
+                                                <input type="text" class="validate[required,maxSize[20]] form-control" name="username" value="'.$current_username.'" disabled/>
+                                                <button class="help-block" type="submit" id="edit_username" name="edit_username">Edit<img src="img/edit.png"/></button>
+                                                ';
+
+                                            ?>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Old Password:</label>
-                                        <div class="col-md-9">
-                                            <input type="password" class="validate[required,minSize[5],maxSize[10]] form-control" id="password"/>
-                                            <span class="help-block">Edit<img src="img/edit.png"></span>
-                                        </div>
-                                    </div>                    
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">New Password:</label>
-                                        <div class="col-md-9">
-                                            <input type="password" class="validate[required,equals[password]] form-control"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Confirm New Password:</label>
-                                        <div class="col-md-9">
-                                            <input type="password" class="validate[required,equals[password]] form-control"/>
-                                        </div>
-                                    </div>                                   
+                                            
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Age:</label>
-                                        <div class="col-md-9    ">
-                                            <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control"/>
-                                            <span class="help-block">Edit<img src="img/edit.png"></span>
+                                        <div class="col-md-9">
+                                            <?php
+
+                                            $a = mysql_query('select age from users where username = "'.$_SESSION["username"].'"');
+                                            $current_age = mysql_result($a, 0);
+
+                                            if(isset($_POST['edit_age']))
+                                                echo '
+                                                    <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control" name="age" value="'.$current_age.'"/>
+                                                    <span class="help-block">Required, integer, min value = 18, max = 120</span>
+                                                    <div class="btn-group pull-right">
+                                                        <button class="btn btn-primary" type="submit" name="save_age">Save</button>
+                                                    </div>
+                                                    ';
+                                            else if(isset($_POST['save_age']))
+                                            {
+                                                $new_age = $_POST['age'];
+                                                $a = mysql_query('update users set age="'.$new_age.'" where username="'.$_SESSION["username"].'"');
+
+                                                echo '
+                                                    <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control" name="age" value="'.$new_age.'" disabled/>
+                                                    <button class="help-block" type="submit" id="edit_age" name="edit_age">Edit<img src="img/edit.png"/></button>';
+                                            }
+                                            else
+                                                echo '    
+                                                <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control" name="username" value="'.$current_age.'" disabled/>
+                                                <button class="help-block" type="submit" id="edit_age" name="edit_age">Edit<img src="img/edit.png"/></button>
+                                                ';
+                                                
+                                            ?>
+                                            
                                         </div>                        
+                                    </div>                      
                                     </div>
-                            
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Tag</label>
+                                        <div class="col-md-9">
+                                            <?php
+
+                                            $a = mysql_query('select description from users where username = "'.$_SESSION["username"].'"');
+                                            $currnet_tag = mysql_result($a, 0);
+
+                                            if(isset($_POST['edit_tag']))
+                                                echo '
+                                                    <input type="text" class="validate[false,maxSize[20]] form-control" name="description" value="'.$current_age.'"/>
+                                                    <span class="help-block">A sentence defining you</span>
+                                                    <div class="btn-group pull-right">
+                                                        <button class="btn btn-primary" type="submit" name="save_tag">Save</button>
+                                                    </div>
+                                                    ';
+                                            else if(isset($_POST['save_tag']))
+                                            {
+                                                $new_tag = $_POST['description'];
+                                                $a = mysql_query('update users set description="'.$new_tag.'" where username="'.$_SESSION["username"].'"');
+                                                
+                                                echo '
+                                                    <input type="text" class="validate[false,maxSize[20]] form-control" name="description" value="'.$new_tag.'" disabled/>
+                                                    <button class="help-block" type="submit" id="edit_tag" name="edit_tag">Edit<img src="img/edit.png"/></button>';
+                                            }
+                                            else
+                                                echo '    
+                                                <input type="text" class="validate[false,maxSize[20]] form-control" name="description" value="'.$currnet_tag.'" disabled/>
+                                                <button class="help-block" type="submit" id="edit_tag" name="edit_tag">Edit<img src="img/edit.png"/></button>
+                                                ';
+                                                
+                                            ?>
+                                        </div>               
+                                    </div>    
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Phone number:</label>
                                         <div class="col-md-9">
-                                            <input type="number" class="validate[required,custom[integer],min[650000000],max[670000000]] form-control"/>
-                                            <span class="help-block">Edit<img src="img/edit.png"></span>
-                                         
-                                        </div>
+                                            <?php
+
+                                            $a = mysql_query('select phone_number from users where username = "'.$_SESSION["username"].'"');
+                                            $current_phone_number = mysql_result($a, 0);
+
+                                            if(isset($_POST['edit_phone_number']))
+                                                echo '
+                                                    <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="phone_number" value="'.$current_age.'"/>
+                                                    <span class="help-block">Required, phone number</span>
+                                                    <div class="btn-group pull-right">
+                                                        <button class="btn btn-primary" type="submit" name="save_phone_number">Save</button>
+                                                    </div>
+                                                    ';
+                                            else if(isset($_POST['save_phone_number']))
+                                            {
+                                                $new_phone_number = $_POST['phone_number'];
+                                                $a = mysql_query('update users set phone_number="'.$new_phone_number.'" where username="'.$_SESSION["username"].'"');
+
+                                                echo '
+                                                    <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="phone_number" value="'.$new_phone_number.'" disabled/>
+                                                    <button class="help-block" type="submit" id="edit_phone_number" name="edit_phone_number">Edit<img src="img/edit.png"/></button>';
+                                            }
+                                            else
+                                                echo '    
+                                                <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="username" value="'.$current_phone_number.'" disabled/>
+                                                <button class="help-block" type="submit" id="edit_phone_number" name="edit_phone_number">Edit<img src="img/edit.png"/></button>
+                                                ';
+                                                
+                                            ?>
+                                            
+                                        </div>               
                                     </div>             
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">MTN mobile money number:</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control"/>
-                                            <span class="help-block">Edit<img src="img/edit.png"></span>
-                                         
-                                        </div>
-                                    </div>          
-                                           
+                                            <?php
+
+                                            $a = mysql_query('select mobile_money_number from users where username = "'.$_SESSION["username"].'"');
+                                            $current_mobile_money_number = mysql_result($a, 0);
+
+                                            if(isset($_POST['edit_mobile_money_number']))
+                                                echo '
+                                                    <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="mobile_money_number" value="'.$current_age.'"/>
+                                                    <span class="help-block">Required, mobile money number</span>
+                                                    <div class="btn-group pull-right">
+                                                        <button class="btn btn-primary" type="submit" name="save_mobile_money_number">Save</button>
+                                                    </div>
+                                                    ';
+                                            else if(isset($_POST['save_mobile_money_number']))
+                                            {
+                                                $new_mobile_money_number = $_POST['mobile_money_number'];
+                                                $a = mysql_query('update users set mobile_money_number="'.$new_mobile_money_number.'" where username="'.$_SESSION["username"].'"');
+
+                                                echo '
+                                                    <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="mobile_money_number" value="'.$new_mobile_money_number.'" disabled/>
+                                                    <button class="help-block" type="submit" id="mobile_money_number" name="mobile_money_number">Edit<img src="img/edit.png"/></button>';
+                                            }
+                                            else
+                                                echo '    
+                                                <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="mobile_money_number" value="'.$current_mobile_money_number.'" disabled/>
+                                                <button class="help-block" type="submit" id="mobile_money_number" name="mobile_money_number">Edit<img src="img/edit.png"/></button>
+                                                ';
+                                                
+                                            ?>
+                                            
+                                        </div>               
+                                    </div>                                      
                                     <div class="btn-group pull-right">
-                                        <button class="btn btn-primary" type="submit">Change</button>
-                                    </div>          
-                                    <!-- Still TODO : code javascript ask user if the want to leave page ... and to wipe all forms -->
-                                    <div class="btn-group pull-left">
-                                        <button class="btn btn-warning" >Cancel</button>                                                      
+                                        <button class="btn btn-primary" type="submit" name="submit_button">Save</button>
+                                    </div>                                                                
                                 </form>
                             </div>                                               
                             <!-- END VALIDATIONENGINE PLUGIN -->
-                                
-                                </div>
-                            </div>
+
+                        </div>
+                        
                         </div>
                     </div>
                 </div>
@@ -299,7 +484,13 @@ if(isset($_POST["submit"]))
                         },
                         
                     }                                        
-                });                               
+                });   
+
+                //edit profil picture
+                //open image from device gallery
+                function edit_pofile_picture()
+                {}      
+
 
         </script>
         
