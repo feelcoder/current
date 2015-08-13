@@ -78,10 +78,6 @@ session_start();
                     <li class="active">
                         <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-settings.php"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
-                    </li>         
-                    
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>
@@ -307,8 +303,7 @@ $(function(){
         });
         
         $("#reportrange span").php(moment().subtract("days", 29).format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY"));
-    }
-    /* end reportrange */';
+    });';
 
     /* Donut dashboard chart */
     

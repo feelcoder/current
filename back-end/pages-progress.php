@@ -76,10 +76,7 @@ $_SESSION["mobile_money"] = "on";
                     </li>   
                     <li class="active">
                         <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>   
-                    <li class="active">
-                        <a href="pages-settings.php"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
-                    </li>         
+                    </li>        
                     
                 </ul>
                 <!-- END X-NAVIGATION -->

@@ -84,10 +84,6 @@ if(isset($_POST["submit"]))
                     <li class="active">
                         <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-settings.php"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
-                    </li>         
-                    
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>
@@ -150,7 +146,7 @@ if(isset($_POST["submit"]))
 
                                 <!-- begin php -->
                                 <?php
-                                    $a = mysql_query('select name,about,logo,moto from agencies');
+                                    $a = mysql_query('select name,about,logo,moto from agencies;');
 
                                     //Agency item
                                     while($row = mysql_fetch_array($a))
@@ -176,7 +172,7 @@ if(isset($_POST["submit"]))
                                             <div class="panel-body">                                    
                                                 <div>'.$about.'</div>
                                                 <div class="col-md-6">
-                                                    <input type="submit" class="btn btn-info btn-block" value="USE" name="submit"/>
+                                                    <button class="btn btn-primary" type="submit" name="submit_button">USE</button>
                                                 </div>
                                             </div>                                
                                         </div>

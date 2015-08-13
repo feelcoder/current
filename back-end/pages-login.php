@@ -6,11 +6,13 @@ $connection = mysql_pconnect("localhost","test","test");
 
 //clear any running session
 //for some reason, unset was not working
+    //start new session
+session_start();
+
 if(isset($_SESSION["username"]))
     $_SESSION["username"] = "off";
 
-//start new session
-session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en" class="body-full-height">

@@ -1,8 +1,8 @@
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
-     if(!$connection)
-        header("Location: pages-error-500.php");
-    mysql_select_db("test");
+if(!$connection)
+    header("Location: pages-error-500.html");
+mysql_select_db("test");
 session_start();
 
 $username = '';
@@ -14,7 +14,7 @@ $phone_number = '';
 $mobile_money_number = '';
 $GLOBALS['exist'] = "false";
 
-if(isset($_POST['submit']))
+if(isset($_POST['submit_button']))
 {
     if(isset($_POST['username']))
         $username = $_POST['username'];
@@ -29,7 +29,11 @@ if(isset($_POST['submit']))
     if(isset($_POST['mobile_money_number']))
         $mobile_money_number = $_POST['mobile_money_number'];
     if(isset($_POST['description']))
+    {
         $description = $_POST['description'];
+        if($description == '')
+            $description = "Just a user";
+    }   
 
     $a = mysql_query('select count(*) from users where username = "'.$username.'"');
     if($a)
@@ -42,11 +46,13 @@ if(isset($_POST['submit']))
     else
     {
         $hash = hash('sha512',$password); 
-        $a = mysql_query('insert into users values (null,"'.$username.'","'.$hash.'","'.$description.'","'.$gender.'",'.$age.',"./assets/images/users/profile_default","'.$phone_number.'","'.$mobile_money_number.'"');
+        $a = mysql_query('insert into users values (null,"'.$username.'","'.$hash.'","'.$description.'","'.$gender.'",'.$age.',"./assets/images/users/profile_default.png","'.$phone_number.'","'.$mobile_money_number.'");');
+
         if(!$a)
             header("Location: pages-error-500.html");
+
         $_SESSION['username'] = $username;
-        header("Location: pages-error-500.html");
+        header("Location: index.php");
     }
 }
 ?>
@@ -54,7 +60,7 @@ if(isset($_POST['submit']))
 <html lang="en">
     <head>        
         <!-- META SECTION -->
-        <title>Atlant - Responsive Bootstrap Admin Template</title>            
+        <title>Quick Money Transfer - Signup</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -109,7 +115,7 @@ if(isset($_POST['submit']))
 
                             <!-- START VALIDATIONENGINE PLUGIN -->
                             <div class="block">                              
-                                <form id="validate" role="form" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">                            
+                                <form id="jvalidate" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">                            
                                     <div class="form-group">
                                         <?php
                                             if($GLOBALS['exist'] == "true")
@@ -156,7 +162,7 @@ if(isset($_POST['submit']))
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Tag</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="validate[false,maxSize[20]] form-control" placeholder="Just a user" name="description"/>
+                                            <input type="text" class="validate[false,maxSize[20]] form-control" placeholder="Short tag to display by your profile picture" name="description"/>
                                             <span class="help-block">A sentence defining you</span>
                                         </div>
                                     </div>    
@@ -184,7 +190,7 @@ if(isset($_POST['submit']))
                                         </div>
                                     </div>                                
                                     <div class="btn-group pull-right">
-                                        <button class="btn btn-primary" type="button" name="submit">Submit</button>
+                                        <button class="btn btn-primary" type="submit" name="submit_button">Submit</button>
                                     </div>                                                                
                                 </form>
                             </div>                                               
@@ -271,7 +277,7 @@ if(isset($_POST['submit']))
                         },
                         
                     }                                        
-                });                                    
+                });                               
 
         </script>
         

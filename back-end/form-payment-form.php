@@ -1,12 +1,12 @@
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
-        header("Location: pages-error-500.php");
+        header("Location: pages-error-500.html");
     mysql_select_db("test");
 session_start();
 
 //store these  variables for use in the next pages
-if(isset($_POST["submit"]))
+if(isset($_POST["submit_button"]))
 {
     $user = '';
     $receiver = '';
@@ -29,19 +29,19 @@ if(isset($_POST["submit"]))
     if(isset($_POST['date']))
         $date = $_POST['date'];
 
-    if(!$user != '')
+    if($user != '')
         $_SESSION['user'] = $user;
-    if(!$receiver != '')
+    if($receiver != '')
         $_SESSION['receiver'] = $receiver;
-    if(!$receiver_number != '')
+    if($receiver_number != '')
         $_SESSION['receiver_number'] = $receiver_number;
-    if(!$mobile_money_number != '')
+    if($mobile_money_number != '')
         $_SESSION['mobile_money_number'] = $mobile_money_number;
-    if(!$amount != '')
+    if($amount != '')
         $_SESSION['amount'] = $amount;
-    if(!$date != '')
+    if($date != '')
         $_SESSION['date'] = $date;
-    if(!$location != '')
+    if($location != '')
         $_SESSION['location'] = $location;
 }
 ?>
@@ -102,6 +102,13 @@ if(isset($_POST["submit"]))
                                     </div>';
                                     }
                                 }
+                                else
+                                     echo '<img src="" alt="profile_picture"/>
+                                    </div>
+                                    <div class="profile-data">
+                                        <div class="profile-data-name">uername</div>
+                                        <div class="profile-data-title">description</div>
+                                    </div>';
                             ?>
                         </div>                                                                        
                     </li>
@@ -117,9 +124,6 @@ if(isset($_POST["submit"]))
                     </li>   
                     <li class="active">
                         <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>   
-                    <li class="active">
-                        <a href="pages-settings.php"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
                     </li>         
                     
                 </ul>
@@ -196,7 +200,7 @@ if(isset($_POST["submit"]))
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Username:</label>  
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" value="<?php if(isset($_SESSION["username]") && $_SESSION["username"] != "off") echo $_SESSION["username"] ?>" name="username"/>
+                                            <input type="text" class="form-control" value="<?php if(isset($_SESSION["username"]) && $_SESSION["username"] != "off") echo $_SESSION["username"]; ?>" name="username"/>
                                             <span class="help-block">min size = 2, max size = 20</span>
                                         </div>
                                     </div>  
@@ -246,7 +250,7 @@ if(isset($_POST["submit"]))
 
                                     <a href="pages-transaction.php" style ="float: left;"><input type="button" class="btn btn-info btn-block" value="back" /><a/>    
                                     <div class="btn-group pull-right">
-                                        <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+                                        <button class="btn btn-primary" type="submit" name="submit_button">Submit</button>
                                     </div>  
                                 </div>  
                                 </form>

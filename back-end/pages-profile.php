@@ -4,12 +4,18 @@ $connection = mysql_pconnect("localhost","test","test");
         header("Location: pages-error-500.php");
     mysql_select_db("test");
 session_start();
+
+if(isset($_POST["submit"]))
+{
+    if(isset($_POST["name"]))   //store the name of the agency used
+        $_SESSION["agency"] = $_POST["name"];
+}   
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>        
         <!-- META SECTION -->
-        <title>QuickMoney- Settings</title>            
+        <title>Quick Money Transfer </title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,7 +25,7 @@ session_start();
         
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
-        <!-- EOF CSS INCLUDE -->                                     
+        <!-- EOF CSS INCLUDE -->            
     </head>
     <body>
         <!-- START PAGE CONTAINER -->
@@ -42,23 +48,26 @@ session_start();
                                     if(isset($_SESSION["username"]))
                                     {
                                         $username = $_SESSION["username"];
-                                        $r = mysql_query('select profile_picture from users where username="'.$username.'"');
-                                        $x = mysql_query('select description from users where username="'.$username.'"');
-                                        $description = mysql_result($x, 0);
+                                        if($username != "off")
+                                        {
+                                            $r = mysql_query('select profile_picture from users where username="'.$username.'"');
+                                            $x = mysql_query('select description from users where username="'.$username.'"');
+                                            $description = mysql_result($x, 0);
 
-                                        if(!$x)
-                                            die(mysql_error());
-                                        if(!$r)
-                                            die(mysql_error());
-                                        
-                                        $path = mysql_result($r, 0);
-                                        echo '<img src="'.$path.'" alt="profile_picture"/>
-                                </div>
-                                <div class="profile-data">
-                                    <div class="profile-data-name">'.$username.'</div>
-                                    <div class="profile-data-title">'.$description.'</div>
-                                </div>';
+                                            if(!$x)
+                                                die(mysql_error());
+                                            if(!$r)
+                                                die(mysql_error());
+                                            
+                                            $path = mysql_result($r, 0);
+                                            echo '<img src="'.$path.'" alt="profile_picture"/>
+                                    </div>
+                                    <div class="profile-data">
+                                        <div class="profile-data-name">'.$username.'</div>
+                                        <div class="profile-data-title">'.$description.'</div>
+                                    </div>';
                                     }
+                                }
                             ?>
                         </div>                                                                        
                     </li>
@@ -75,9 +84,7 @@ session_start();
                     <li class="active">
                         <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-settings.php"><span class="fa fa-desktop"></span> <span class="xn-text">Settings</span></a>                        
-                    </li>         
+        
                     
                 </ul>
                 <!-- END X-NAVIGATION -->
@@ -100,34 +107,34 @@ session_start();
                         <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                     </li> 
                     <li>
-                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"])) echo $_SESSION[
+                        <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"]) && $_SESSION["username"] != "off") echo $_SESSION[
                         "username"]; ?></span></a>                        
                     </li> 
                     <!-- END SIGN OUT -->
                     
                 </ul>
-                <!-- END X-NAVIGATION VERTICAL -->                 
+                <!-- END X-NAVIGATION VERTICAL -->                  
                 
                 <!-- START BREADCRUMB -->
-                <ul class="breadcrumb push-down-0">
+                <ul class="breadcrumb">
                     <li><a href="index.php">Dashboard</a></li>
                     <li class="active">Profile</li>
-                  
                 </ul>
-                <!-- END BREADCRUMB -->                
-               <!-- PAGE TITLE -->
+                <!-- END BREADCRUMB -->
+                
+                <!-- PAGE TITLE -->
                 <div class="page-title">                    
-                    <h2><span class="fa fa-arrow-circle-o-left"></span>Settings</h2>
+                    <h2><span class="fa fa-arrow-circle-o-left"></span>Profile</h2>
                     
                 </div>
-                <!-- END PAGE TITLE -->          
-
-                 <!-- PAGE CONTENT WRAPPER -->
-                <div class="page-content-wrap">                
+                <!-- END PAGE TITLE -->                
                 
+                <!-- PAGE CONTENT WRAPPER -->
+                <div class="page-content-wrap">                           
                     <div class="row">
-                        <div class="col-md-6">
-
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
                             <!-- START VALIDATIONENGINE PLUGIN -->
                             <div class="block">                              
                                 <form id="validate" role="form" class="form-horizontal" action="index.html">                            
@@ -191,19 +198,18 @@ session_start();
                                 </form>
                             </div>                                               
                             <!-- END VALIDATIONENGINE PLUGIN -->
-
-                        </div>
-                        
+                                
+                                </div>
+                            </div>
                         </div>
                     </div>
-                        
                 </div>
-                <!-- END PAGE CONTENT WRAPPER -->                
+                <!-- PAGE CONTENT WRAPPER -->                                
             </div>            
             <!-- END PAGE CONTENT -->
         </div>
         <!-- END PAGE CONTAINER -->
-
+        
         <!-- MESSAGE BOX-->
         <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
             <div class="mb-container">
@@ -227,28 +233,77 @@ session_start();
         <!-- START PRELOADS -->
         <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-        <!-- END PRELOADS -->              
+        <!-- END PRELOADS -->                
         
     <!-- START SCRIPTS -->
         <!-- START PLUGINS -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
         <!-- END PLUGINS -->
-
-        <!-- START THIS PAGE PLUGINS-->        
+        
+        <!-- THIS PAGE PLUGINS -->
         <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
         
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>     
-        <!-- END THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>        
+        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-select.js'></script>        
+
+        <script type='text/javascript' src='js/plugins/validationengine/languages/jquery.validationEngine-en.js'></script>
+        <script type='text/javascript' src='js/plugins/validationengine/jquery.validationEngine.js'></script>        
+
+        <script type='text/javascript' src='js/plugins/jquery-validation/jquery.validate.js'></script>                
+
+        <script type='text/javascript' src='js/plugins/maskedinput/jquery.maskedinput.min.js'></script>
+        <!-- END THIS PAGE PLUGINS -->               
 
         <!-- START TEMPLATE -->
         <script type="text/javascript" src="js/settings.js"></script>
         
-        <script type="text/javascript" src="js/plugins.js"></script>        
-        <script type="text/javascript" src="js/actions.js"></script>        
+        <script type="text/javascript" src="js/plugins.js"></script>
+        <script type="text/javascript" src="js/actions.js"></script>
         <!-- END TEMPLATE -->
-    <!-- END SCRIPTS -->         
+        
+        <script type="text/javascript">
+            var jvalidate = $("#jvalidate").validate({
+                ignore: [],
+                rules: {                                            
+                        login: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 20
+                        },
+                        password: {
+                                required: true,
+                                minlength: 8,
+                                maxlength: 10
+                        },
+                        're-password': {
+                                required: true,
+                                minlength: 8,
+                                maxlength: 10,
+                                equalTo: "#password"
+                        },
+                        age: {
+                                required: true,
+                                min: 15,
+                                max: 100
+                        },
+                        email: {
+                                required: true,
+                                email: true
+                        },
+                        date: {
+                                required: true,
+                                date: true
+                        },
+                        
+                    }                                        
+                });                               
+
+        </script>
+        
+    <!-- END SCRIPTS -->          
+        
     </body>
 </html>
