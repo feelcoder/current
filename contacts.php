@@ -48,7 +48,7 @@ session_start();?>
                     
                         if(isset($_SESSION["username"]))
                             if($_SESSION["username"] != "off")
-                                echo '<li><a href="back-end/pages-profile.php">'.$_SESSION["username"].'</a></li>';
+                                echo '<li><a href="back-end/index.php">'.$_SESSION["username"].'</a></li>';
                             else
                                 echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
                         else
