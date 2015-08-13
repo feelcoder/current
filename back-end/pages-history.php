@@ -104,7 +104,6 @@ session_start();
                     
                 </ul>
                 <!-- END X-NAVIGATION VERTICAL -->                     
-     
                 
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
@@ -126,7 +125,7 @@ session_start();
                             <!-- START SIMPLE DATATABLE -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">                                
-                                    <h3 class="panel-title">History</h3>   
+                                    <h3 class="panel-title">Transactions</h3>   
                                     <ul class="panel-controls">
                                         <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
                                     </ul>                                
@@ -138,187 +137,51 @@ session_start();
                                                 <th>Receiver</th>
                                                 <th>Town</th>
                                                 <th>Agency</th>
-                                                <th>Start date</th>
+                                                <th>Date</th>
                                                 <th>Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <!-- start of php -->
+                                        <?php
+                                        $receiver = '';
+                                        $town = '';
+                                        $date = '';
+                                        $agency = '';
+                                        $amount = '';
+
+                                        $a = mysql_query('select * from transactions');
+
+                                        while($row = mysql_fetch_array($a))
+                                        {
+                                            $receiver = $row[1];
+                                            $town = $row[4];
+                                            $date = $row[2];
+                                            $amount = $row[3];
+
+                                            $agency_id = $row[5];
+                                            $b = mysql_query('select name from agencies where id = '.$agency_id);
+
+                                            $agency = mysql_result($b, 0);
+
+                                            //build table
+                                            echo '
                                             <tr>
-                                                <td>Acha Bill</td>
-                                                <td>Douala</td>
-                                                <td>Express Exchange</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
+                                                <td>'.$receiver.'</td>
+                                                <td>'.$town.'</td>
+                                                <td>'.$agency.'</td>
+                                                <td>'.$date.'</td>
+                                                <td>'.$amount.'</td>
                                             </tr>
-                                            <tr>
-                                                <td>Daniel Carlson</td>
-                                                <td>Yaounde</td>
-                                                <td>Express Union</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shadow-code</td>
-                                                <td>Bamenda</td>
-                                                <td>Emi Money</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                                                                        <tr>
-                                                <td>Acha Bill</td>
-                                                <td>Douala</td>
-                                                <td>Express Exchange</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Daniel Carlson</td>
-                                                <td>Yaounde</td>
-                                                <td>Express Union</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shadow-code</td>
-                                                <td>Bamenda</td>
-                                                <td>Emi Money</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                                                                        <tr>
-                                                <td>Acha Bill</td>
-                                                <td>Douala</td>
-                                                <td>Express Exchange</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Daniel Carlson</td>
-                                                <td>Yaounde</td>
-                                                <td>Express Union</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shadow-code</td>
-                                                <td>Bamenda</td>
-                                                <td>Emi Money</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                                                                        <tr>
-                                                <td>Acha Bill</td>
-                                                <td>Douala</td>
-                                                <td>Express Exchange</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Daniel Carlson</td>
-                                                <td>Yaounde</td>
-                                                <td>Express Union</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shadow-code</td>
-                                                <td>Bamenda</td>
-                                                <td>Emi Money</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                                                                        <tr>
-                                                <td>Acha Bill</td>
-                                                <td>Douala</td>
-                                                <td>Express Exchange</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Daniel Carlson</td>
-                                                <td>Yaounde</td>
-                                                <td>Express Union</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shadow-code</td>
-                                                <td>Bamenda</td>
-                                                <td>Emi Money</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                                                                        <tr>
-                                                <td>Acha Bill</td>
-                                                <td>Douala</td>
-                                                <td>Express Exchange</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Daniel Carlson</td>
-                                                <td>Yaounde</td>
-                                                <td>Express Union</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shadow-code</td>
-                                                <td>Bamenda</td>
-                                                <td>Emi Money</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                                                                        <tr>
-                                                <td>Acha Bill</td>
-                                                <td>Douala</td>
-                                                <td>Express Exchange</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Daniel Carlson</td>
-                                                <td>Yaounde</td>
-                                                <td>Express Union</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shadow-code</td>
-                                                <td>Bamenda</td>
-                                                <td>Emi Money</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                                                                        <tr>
-                                                <td>Acha Bill</td>
-                                                <td>Douala</td>
-                                                <td>Express Exchange</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Daniel Carlson</td>
-                                                <td>Yaounde</td>
-                                                <td>Express Union</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shadow-code</td>
-                                                <td>Bamenda</td>
-                                                <td>Emi Money</td>
-                                                <td>2011/04/25</td>
-                                                <td>320,800</td>
-                                            </tr>
+                                            ';
+                                        }
+                                        ?>
+                                        <!-- end of php -->
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <!-- END SIMPLE DATATABLE -->
-
-                        
-
                         </div>
                     </div>                                
                     
