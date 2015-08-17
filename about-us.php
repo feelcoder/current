@@ -95,7 +95,13 @@ session_start(); ?>
                         <div class="block-heading block-heading-centralized this-animate" data-animate="fadeInDown">
                             <h2 class="heading-underline">Meet the Team</h2>
                             <div class="block-heading-text">
-                                They made it possible so <strong>your our reason for being a business</strong> will fill very <strong>satified!</strong>
+								<strong><blockquote>Coming together is a beginning. Keeping together is progress. Working together is success.<br /> 
+																											-Henry Ford</blockquote>
+								<blockquote>Alone we can do so little; together we can do so much. <br />
+																										-Helen Keller</blockquote>
+								<blockquote>So powerful is the light of unity that it can illuminate the whole earth. </blockquote></strong>
+								<strong><i>TOGETHER WE MAKE THE WORLD A BRIGHTER PLACE</i></strong>
+                                
                             </div>
 
                              <div class="col-md-3 col-sm-3 col-xs-3">

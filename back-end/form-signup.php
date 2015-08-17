@@ -1,8 +1,3 @@
-<!--
-    Sign up is perfect. 
-    Test for any errors
--->
-
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
 if(!$connection)
@@ -101,7 +96,7 @@ if(isset($_POST['submit_button']))
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="../index.php">Home</a></li>
-                    <li><a href="pages-login.php">Sing In</a></li>
+                    <li><a href="pages-login.php">Sign Up</a></li>
                     <li class="active">Create Account</li>
                 </ul>
                 <!-- END BREADCRUMB -->
@@ -136,7 +131,7 @@ if(isset($_POST['submit_button']))
                                         <label class="col-md-3 control-label">Password:</label>
                                         <div class="col-md-9">
                                             <input type="password" class="validate[required,minSize[8],maxSize[10]] form-control" id="password" name="password"/>
-                                            <span class="help-block">Required, min size = 8, max size = 10</span>
+                                            <span class="help-block">Required, min size = 8, max size = 64</span>
                                         </div>
                                     </div>                    
                                     <div class="form-group">
@@ -259,7 +254,7 @@ if(isset($_POST['submit_button']))
                         password: {
                                 required: true,
                                 minlength: 8,
-                                maxlength: 10
+                                maxlength: 64
                         },
                         're-password': {
                                 required: true,

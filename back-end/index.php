@@ -72,9 +72,6 @@ session_start();
                     </li>
                     <li class="xn-title">Navigation</li>
                     <li class="active">
-                        <a href="index.php"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>                        
-                    </li> 
-                    <li class="active">
                         <a href="pages-transaction.php"><span class="fa fa-desktop"></span> <span class="xn-text">Trasaction</span></a>                        
                     </li>       
                     <li class="active">
@@ -82,6 +79,9 @@ session_start();
                     </li>   
                     <li class="active">
                         <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
+                    </li>   
+					<li class="active">
+                        <a href="pages-profile.php"><span class="fa fa-desktop"></span> <span class="xn-text">Profile</span></a>                        
                     </li>   
                 </ul>
                 <!-- END X-NAVIGATION -->

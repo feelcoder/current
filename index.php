@@ -93,8 +93,8 @@ session_start(); ?>
                                 
                                 
                                 <div class="tp-caption lft customout rs-parallaxlevel-0"
-                                    data-x="550"
-                                    data-y="230" 
+                                    data-x="450"
+                                    data-y="200" 
                                     data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
                                     data-speed="700"
                                     data-start="1200"
@@ -102,7 +102,7 @@ session_start(); ?>
                                     data-elementdelay="0.1"
                                     data-endelementdelay="0.1"
                                     style="z-index: 3;">
-                                    <img src="assets/slider-layers/atlant_monitor.png" alt="Atlant"/>
+                                    <img src="assets/slider-layers/test6.jpg" alt="Picture depicting money transfer"/>
                                 </div>
                                 
                                 <div class="tp-caption black_thin_34 customin tp-resizeme rs-parallaxlevel-0"

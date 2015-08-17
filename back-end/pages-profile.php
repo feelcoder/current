@@ -1,5 +1,6 @@
 <!-- work to be done here
-    1: complete the javascript function above to select image from device gallery for profile picture
+    1: actually the code uploads the image but for some reason it does not display the pic on the page
+		Need more time to fix this.
     2: complete change password option.
     3: Jvalidate checks don't work. Provide javascript front end checks to inputs
     4: On edit button click, the page reloads and starts from the top.
@@ -21,7 +22,7 @@ if(isset($_POST['submit_button']))
 <html lang="en">
     <head>        
         <!-- META SECTION -->
-        <title>Quick Money Transfer </title>            
+        <title>Quick Money Transfer | Profile</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -89,7 +90,7 @@ if(isset($_POST['submit_button']))
                     </li>   
                     <li class="active">
                         <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>   
+                    </li>
         
                     
                 </ul>
@@ -167,12 +168,72 @@ if(isset($_POST['submit_button']))
                                     }
                                 }
                                 ?>
-                                <div class="btn-group pull-left">
-                                    <button class="btn btn-primary" onclick="edit_pofile_picture()">Change Picture</button>
-                                </div> 
+								<form name="Image" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+									<div class="btn-group pull-left camera">
+										<input type="file" name="Photo" size="2000000" accept="image/gig, image/jpeg, image/x-ms-bmp,
+										image/x-png" size="26"><br />
+										<button class="btn btn-primary"  name="Photo" id="Photo" type="submit">Change Picture</button> 
+									</div> 
+								</form>
+								<?php
+									$username = $_SESSION["username"];
+									$uploadDir = 'assets/images/users/';
+									if(isset($_POST['submitPic']))
+									{
+										$fileName = $_FILES['Photo']['nameOfPic'];
+										$tmpName = $_FILES['Photo']['tmp_name'];
+										$fileSize = $_FILES['Photo']['size'];
+										$fileType = $_FILES['Photo']['type'];
+										
+										$filePath = $uploadDir . $fileName;
+										$result = move_uploaded_file($tmpName, $filePath);
+										
+										if(!result){
+											echo '<p style="color: red">Error uploading file!</p>';
+											exit;
+										}
+										if(!get_magic_quotes_gpc())
+										{
+											$fileName = addslashes($fileName);
+											$filePath = addslashes($filePath);
+										}
+										$query = "UPDATE users set profile_picture=". $filePath . " where username=" . $username . ";";
+										mysql_query($query) or die('Error, query failed: '. mysql_error);
+									}
+								?>
                                 <div class="btn-group pull-right">
-                                    <button class="btn btn-primary"><a href="#">Change Password</a></button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><a href="#">Change Password</a></button>
                                 </div> 
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+									<div class="modal-dialog"> 
+										<div class="modal-content"> 
+											<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+												<h4 class="modal-title" id="myModalLabel"> Atlant Password Changer</h4> 
+											</div> 
+											<div class="modal-body">
+												<form role="form">
+													<div class="form-group">
+														<label for="cpassword">Old Password:</label>
+														<input type="password" class="form-control" id="cpass" placeholder="Enter old Password">
+													</div>
+													<div class="form-group">
+														<label for="cpassword1">New Password:</label>
+														<input type="password" class="form-control" id="cpass1" placeholder="Enter New Password">
+													</div>
+													<div class="form-group">
+														<label for="cpassword2">Confirm:</label>
+														<input type="password" class="form-control" id="cpass2" placeholder="Confirm New Password">
+													</div>
+												</form>
+											</div> 
+											<div class="modal-footer"> 
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close </button> 
+												<button type="button" class="btn btn-primary"> Change Password </button> 
+											</div> 
+										</div><!-- /.modal-content --> 
+									</div><!-- /.modal -->
+								</div>
+								
                             </div>
                             </div>
                         <div class="col-md-6">
@@ -221,16 +282,16 @@ if(isset($_POST['submit_button']))
                                                         $_SESSION['username'] = $new_username;
 
                                                         echo '    
-                                                        <input type="text" class="validate[required,maxSize[20]] form-control" name="username" value="'.$new_username.'" disabled/>
-                                                        <button class="help-block" type="submit" id="edit_username" name="edit_username">Edit<img src="img/edit.png"/></button>
+                                                        <input type="text" id="username" class="validate[required,maxSize[20]] form-control" name="username" value="'.$new_username.'" disabled/>
+                                                        <button class="help-block" type="submit" id="edit_username" name="edit_username" onclick="setFocusToField("username")">Edit<img src="img/edit.png"/></button>
                                                         ';
                                                     }
                                                 }
                                             }
                                             else
                                                 echo '    
-                                                <input type="text" class="validate[required,maxSize[20]] form-control" name="username" value="'.$current_username.'" disabled/>
-                                                <button class="help-block" type="submit" id="edit_username" name="edit_username">Edit<img src="img/edit.png"/></button>
+                                                <input type="text" id="username" class="validate[required,maxSize[20]] form-control" name="username" value="'.$current_username.'" disabled/>
+                                                <button class="help-block" type="submit" id="edit_username" name="edit_username" onclick="setFocusToField("username")">Edit<img src="img/edit.png"/></button>
                                                 ';
 
                                             ?>
@@ -259,13 +320,13 @@ if(isset($_POST['submit_button']))
                                                 $a = mysql_query('update users set age="'.$new_age.'" where username="'.$_SESSION["username"].'"');
 
                                                 echo '
-                                                    <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control" name="age" value="'.$new_age.'" disabled/>
-                                                    <button class="help-block" type="submit" id="edit_age" name="edit_age">Edit<img src="img/edit.png"/></button>';
+                                                    <input type="text" id="age" class="validate[required,custom[integer],min[18],max[120]] form-control" name="age" value="'.$new_age.'" disabled/>
+                                                    <button class="help-block" type="submit" id="edit_age" name="edit_age" onclick="setFocusToField("age")">Edit<img src="img/edit.png"/></button>';
                                             }
                                             else
                                                 echo '    
-                                                <input type="text" class="validate[required,custom[integer],min[18],max[120]] form-control" name="username" value="'.$current_age.'" disabled/>
-                                                <button class="help-block" type="submit" id="edit_age" name="edit_age">Edit<img src="img/edit.png"/></button>
+                                                <input type="text" id="age" class="validate[required,custom[integer],min[18],max[120]] form-control" name="age" value="'.$current_age.'" disabled/>
+                                                <button class="help-block" type="submit" id="edit_age" name="edit_age" onclick="setFocusToField("age")">Edit<img src="img/edit.png"/></button>
                                                 ';
                                                 
                                             ?>
@@ -274,7 +335,7 @@ if(isset($_POST['submit_button']))
                                     </div>                      
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Tag</label>
+                                        <label class="col-md-3 control-label">Description</label>
                                         <div class="col-md-9">
                                             <?php
 
@@ -295,13 +356,13 @@ if(isset($_POST['submit_button']))
                                                 $a = mysql_query('update users set description="'.$new_tag.'" where username="'.$_SESSION["username"].'"');
                                                 
                                                 echo '
-                                                    <input type="text" class="validate[false,maxSize[20]] form-control" name="description" value="'.$new_tag.'" disabled/>
-                                                    <button class="help-block" type="submit" id="edit_tag" name="edit_tag">Edit<img src="img/edit.png"/></button>';
+                                                    <input type="text" id="description" class="validate[false,maxSize[20]] form-control" name="description" value="'.$new_tag.'" disabled/>
+                                                    <button class="help-block" type="submit" id="edit_tag" name="edit_tag" onclick="setFocusToField("description")">Edit<img src="img/edit.png"/></button>';
                                             }
                                             else
                                                 echo '    
-                                                <input type="text" class="validate[false,maxSize[20]] form-control" name="description" value="'.$currnet_tag.'" disabled/>
-                                                <button class="help-block" type="submit" id="edit_tag" name="edit_tag">Edit<img src="img/edit.png"/></button>
+                                                <input type="text" id="description" class="validate[false,maxSize[20]] form-control" name="description" value="'.$currnet_tag.'" disabled/>
+                                                <button class="help-block" type="submit" id="edit_tag" name="edit_tag" onclick="setFocusToField("description")">Edit<img src="img/edit.png"/></button>
                                                 ';
                                                 
                                             ?>
@@ -329,13 +390,13 @@ if(isset($_POST['submit_button']))
                                                 $a = mysql_query('update users set phone_number="'.$new_phone_number.'" where username="'.$_SESSION["username"].'"');
 
                                                 echo '
-                                                    <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="phone_number" value="'.$new_phone_number.'" disabled/>
-                                                    <button class="help-block" type="submit" id="edit_phone_number" name="edit_phone_number">Edit<img src="img/edit.png"/></button>';
+                                                    <input type="text" id="phone_number" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="phone_number" value="'.$new_phone_number.'" disabled/>
+                                                    <button class="help-block" type="submit" id="edit_phone_number" name="edit_phone_number" onclick="setFocusToField("phone_number")">Edit<img src="img/edit.png"/></button>';
                                             }
                                             else
                                                 echo '    
-                                                <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="username" value="'.$current_phone_number.'" disabled/>
-                                                <button class="help-block" type="submit" id="edit_phone_number" name="edit_phone_number">Edit<img src="img/edit.png"/></button>
+                                                <input type="text" id="phone_number" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="phone_number" value="'.$current_phone_number.'" disabled/>
+                                                <button class="help-block" type="submit" id="edit_phone_number" name="edit_phone_number" onclick="setFocusToField("phone_number")">Edit<img src="img/edit.png"/></button>
                                                 ';
                                                 
                                             ?>
@@ -364,13 +425,13 @@ if(isset($_POST['submit_button']))
                                                 $a = mysql_query('update users set mobile_money_number="'.$new_mobile_money_number.'" where username="'.$_SESSION["username"].'"');
 
                                                 echo '
-                                                    <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="mobile_money_number" value="'.$new_mobile_money_number.'" disabled/>
-                                                    <button class="help-block" type="submit" id="mobile_money_number" name="mobile_money_number">Edit<img src="img/edit.png"/></button>';
+                                                    <input type="text" id="mmoney" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="mobile_money_number" value="'.$new_mobile_money_number.'" disabled/>
+                                                    <button class="help-block" type="submit" id="mobile_money_number" name="mobile_money_number" onclick="setFocusToField("mmoney")">Edit<img src="img/edit.png"/></button>';
                                             }
                                             else
                                                 echo '    
-                                                <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="mobile_money_number" value="'.$current_mobile_money_number.'" disabled/>
-                                                <button class="help-block" type="submit" id="mobile_money_number" name="mobile_money_number">Edit<img src="img/edit.png"/></button>
+                                                <input type="text" id="mmoney" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="mobile_money_number" value="'.$current_mobile_money_number.'" disabled/>
+                                                <button class="help-block" type="submit" id="mobile_money_number" name="mobile_money_number" onclick="setFocusToField("mmoney")">Edit<img src="img/edit.png"/></button>
                                                 ';
                                                 
                                             ?>
@@ -379,7 +440,10 @@ if(isset($_POST['submit_button']))
                                     </div>                                      
                                     <div class="btn-group pull-right">
                                         <button class="btn btn-primary" type="submit" name="submit_button">Save</button>
-                                    </div>                                                                
+                                    </div>     
+									<div class="btn-group pull-left">
+										<button class="btn btn-warning"><a href="#">Cancel</a></button>
+									</div> 
                                 </form>
                             </div>                                               
                             <!-- END VALIDATIONENGINE PLUGIN -->
@@ -485,13 +549,6 @@ if(isset($_POST['submit_button']))
                         
                     }                                        
                 });   
-
-                //edit profil picture
-                //open image from device gallery
-                function edit_pofile_picture()
-                {}      
-
-
         </script>
         
     <!-- END SCRIPTS -->          

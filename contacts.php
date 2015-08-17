@@ -119,28 +119,38 @@ session_start();?>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Name <span class="text-hightlight">*</span></label>
-                                            <input type="text" class="form-control"/>
+                                            <input type="text" id="name" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>E-mail <span class="text-hightlight">*</span></label>
-                                            <input type="email" class="form-control"/>
+                                            <input type="email" id="email" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Subject <span class="text-hightlight">*</span></label>
-                                            <input type="text" class="form-control"/>
+                                            <input type="text" id="subject" class="form-control"/>
                                         </div>
                                         <div class="form-group">
                                             <label>Message <span class="text-hightlight">*</span></label>
-                                            <textarea class="form-control" rows="8"></textarea>
+                                            <textarea class="form-control" id="message" rows="8"></textarea>
                                         </div>
                                         <button class="btn btn-primary btn-lg pull-right">Send Message</button>
-                                        <button class="btn btn-warning btn-lg pull-left">Cancel</button>
+                                        <button class="btn btn-warning btn-lg pull-left" onClick="resetForm()">Reset</button>
                                     </div>
                                 </div>
+								<script>
+								
+									function resetForm(){
+										// Can't seem to use one normal function here coz this isn't exactly a form so I have to do it manually
+										document.getElementById('name').value = "";
+										document.getElementById('email').value = "";
+										document.getElementById('subject').value = "";
+										document.getElementById('message').value = "";
+									}
+								</script>
                                 
                             </div>
                             <div class="col-md-5 this-animate" data-animate="fadeInRight">

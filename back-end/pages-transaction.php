@@ -1,8 +1,3 @@
-<!--
-    This works well. 
-    But i've not tested because there is not data
--->
-
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
@@ -81,14 +76,14 @@ if(isset($_POST["submit"]))
                         <a href="index.php"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>                        
                     </li> 
                     <li class="active">
-                        <a href="pages-transaction.php"><span class="fa fa-desktop"></span> <span class="xn-text">Trasaction</span></a>                        
-                    </li>       
-                    <li class="active">
                         <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
                     <li class="active">
                         <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>   
+                    </li>  
+					<li class="active">
+                        <a href="pages-profile.php"><span class="fa fa-desktop"></span> <span class="xn-text">Profile</span></a>                        
+                    </li>  
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>

@@ -1,8 +1,3 @@
-<!--
-    I think i konw what should be here
-    We'll talk about it when we are throught and ready to simulate moblie money
--->
-
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
@@ -80,10 +75,10 @@ session_start();
                     </li>       
                     <li class="active">
                         <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
-                    </li>   
-                    <li class="active">
-                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>           
+                    </li>    
+					<li class="active">
+                        <a href="pages-profile.php"><span class="fa fa-desktop"></span> <span class="xn-text">Profile</span></a>                        
+                    </li>         
                     
                 </ul>
                 <!-- END X-NAVIGATION -->
