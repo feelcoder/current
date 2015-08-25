@@ -77,9 +77,6 @@ session_start();
                     <li class="active">
                         <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>   
 					<li class="active">
                         <a href="pages-profile.php"><span class="fa fa-desktop"></span> <span class="xn-text">Profile</span></a>                        
                     </li>   
@@ -113,8 +110,7 @@ session_start();
                 <!-- END X-NAVIGATION VERTICAL -->                     
 
                 <!-- START BREADCRUMB -->
-                <ul class="breadcrumb">
-                    <li><a href="index.php">Dashboard</a></li>                    
+                <ul class="breadcrumb">                   
                     <li class="active">Dashboard</li>
                 </ul>
                 <!-- END BREADCRUMB -->                       

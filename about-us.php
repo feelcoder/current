@@ -41,9 +41,8 @@ session_start(); ?>
                      <!-- navigation -->
                     <ul class="navigation">
                         <li><a href="index.php">Home</a></li>
-                        <li><a href="">About Us</a></li>
                         <li><a href="contacts.php">Contact Us</a></li>
-                                                <?php
+                         <?php
                         //check if session is on
                     
                         if(isset($_SESSION["username"]))

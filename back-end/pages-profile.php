@@ -88,10 +88,6 @@ if(isset($_POST['submit_button']))
                     <li class="active">
                         <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>
-        
                     
                 </ul>
                 <!-- END X-NAVIGATION -->

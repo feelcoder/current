@@ -42,7 +42,6 @@ session_start();?>
                     <ul class="navigation">
                         <li><a href="index.php">Home</a></li>
                         <li><a href="about-us.php">About Us</a></li>
-                        <li><a href="contacts.php">Contact Us</a></li>
                                                 <?php
                         //check if session is on
                     
