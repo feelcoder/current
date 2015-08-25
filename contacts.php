@@ -161,8 +161,8 @@ session_start();?>
                                     <h4>Our Office</h4>
                                     <div class="text-column-info">
                                         <p><strong><span class="fa fa-map-marker"></span> Address: </strong> Limbe , Buea, South West, Cameroon</p>
-                                        <p><strong><span class="fa fa-phone"></span> Phone: </strong> (237) xx xx xx xx </p>
-                                        <p><strong><span class="fa fa-envelope"></span> E-mail: </strong> <a href="#">shadowc-code@gmail.com</a></p>
+                                        <p><strong><span class="fa fa-phone"></span> Phone: </strong> (237) 6 79 87 34 01 </p>
+                                        <p><strong><span class="fa fa-envelope"></span> E-mail: </strong> <a href="#">e2cash@gmail.com</a></p>
                                     </div>
                                 </div>
                                 
@@ -202,7 +202,7 @@ session_start();?>
                                     </div>
                                     <div class="fc-row">
                                         <span class="fa fa-phone"></span>
-                                        +237 6 xx xx xx
+                                        +237 6 67 98 34 01
                                     </div>
                                     <div class="fc-row">
                                         <span class="fa fa-envelope"></span>
@@ -230,7 +230,7 @@ session_start();?>
                         
                         <!-- copyright -->
                         <div class="copyright">
-                            &copy; 2014 Atlant Theme by <a href="#">Aqvatarius</a> - All Rights Reserved                            
+                            &copy; 2015 E2CashMoneyTransfer <a href="#">Shadow-code</a> - All Rights Reserved                            
                         </div>
                         <!-- ./copyright -->
                         
