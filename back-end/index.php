@@ -145,7 +145,7 @@ session_start();
 												if($trans != 0){
 													echo '<div class="widget-int">'.$trans.'</div>';
 												}else{				
-													echo '<div class="widget-int">0</div>';
+													echo '<div class="widget-int">No Transfers</div>';
 												}
 											}
 										?>
@@ -160,10 +160,17 @@ session_start();
 											if($username == '')
 												echo '<h1>You are not signed in! </h1><h2>Sign in or Create a new account if you currently have none.</h2>';
 											else{
-												
+												$id = mysql_result(mysql_query('select id from users where username="'.$username.'"'),0);
+                                                $result = mysql_query('select date from transactions where id='.$id.' order by date desc limit 1');
+                                                $latest_transfer = '';
+                                                if(!mysql_fetch_row($result))
+                                                    $latest_transfer = "No transfers";
+                                                else
+                                                    $latest_transfer = mysql_result($result, 0);
 											}
+                                            echo '<div class="widget-int">'.$latest_transfer.'</div>';
 										?>
-                                        <div class="widget-int">27/08/2014 15:23</div>
+                                        
                                     </div>
                                     <div>                                    
                                         <div class="widget-title">Favorite receiver</div>
@@ -176,13 +183,14 @@ session_start();
 												echo '<h1>You are not signed in! </h1><h2>Sign in or Create a new account if you currently have none.</h2>';
 											else{
 												//run query to get most frequent receiver
-												$receiver = mysql_result(mysql_query('select receiver from transactions group by receiver order by count(*) desc limit 1'),0);
-												
-												if($receiver == ''){
-													echo '<div class="widget-int">None</div>';
-												}else{
-													echo '<div class="widget-int">'.$receiver.'</div>';
-												}
+                                                $id = mysql_result(mysql_query('select id from users where username="'.$username.'"'),0);
+												$result = mysql_query('select receiver from transactions where id='.$id.' group by receiver order by count(*) desc limit 1');
+                                                $receiver = '';
+                                                if(!mysql_fetch_row($result))
+                                                    $receiver = "No Transfers";
+                                                else
+                                                    $receiver = mysql_result($result, 0);
+                                                echo '<div class="widget-int">'.$receiver.'</div>';
 											}
 										?>
                                     </div>
