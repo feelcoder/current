@@ -118,30 +118,29 @@ session_start();?>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Name <span class="text-hightlight">*</span></label>
-                                            <input type="text" id="name" class="form-control"/>
+                                            <input type="text" id="name" name="name" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>E-mail <span class="text-hightlight">*</span></label>
-                                            <input type="email" id="email" class="form-control"/>
+                                            <input type="email" id="email" name="email" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Subject <span class="text-hightlight">*</span></label>
-                                            <input type="text" id="subject" class="form-control"/>
+                                            <input type="text" id="subject" name="subject" class="form-control"/>
                                         </div>
                                         <div class="form-group">
                                             <label>Message <span class="text-hightlight">*</span></label>
-                                            <textarea class="form-control" id="message" rows="8"></textarea>
+                                            <textarea class="form-control" id="message" name="msg" rows="8"></textarea>
                                         </div>
                                         <button class="btn btn-primary btn-lg pull-right">Send Message</button>
                                         <button class="btn btn-warning btn-lg pull-left" onClick="resetForm()">Reset</button>
                                     </div>
                                 </div>
 								<script>
-								
 									function resetForm(){
 										// Can't seem to use one normal function here coz this isn't exactly a form so I have to do it manually
 										document.getElementById('name').value = "";
@@ -150,6 +149,68 @@ session_start();?>
 										document.getElementById('message').value = "";
 									}
 								</script>
+								<?php
+									if(isset($_POST['email'])) {
+										// EDIT THE 2 LINES BELOW AS REQUIRED									 
+										$email_to = "dancarl578@gmail.com";									 									 
+															 
+										function died($error) {								 
+											// your error code can go here		 
+											echo "We are very sorry, but there were error(s) found with the form you submitted. ";
+											echo "These errors appear below.<br /><br />";
+											echo $error."<br /><br />";
+											die();
+										}
+										
+										// validation expected data exists
+										if(!isset($_POST['name']) ||  !isset($_POST['email']) || !isset($_POST['subject']) || !isset($_POST['message'])) {									 
+											died('Fill all the form fields pls!');       									 
+										}
+										
+										$name = $_POST['name'];
+										$email_from = $_POST['email'];
+										$subject = $_POST['subject'];
+										$message = $_POST['message'];
+										
+										$error_msg = '';
+										
+										$email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2, 4}$/';
+										
+										if(!preg_match($email_exp, $email_from)){
+											$error_msg .= 'The Email Address you entered does not appear to be valid.<br />';
+										}
+										
+										$string_exp = "/^[A-Za-z . '-]+$/";
+										
+										if(!preg_match($string_exp, $name)){
+											$error_msg .= 'The name you entered does not appear to be valid.<br />';
+										}
+										
+										if(strlen($subject) <= 0){
+											$error_msg .= 'Please enter a subject to your mail.<br />';
+										}
+										
+										if(strlen($message) <= 0){
+											$error_msg .= 'Please your message contains no content.<br />';
+										}
+										
+										if(strlen($error_message) > 0){
+											died($error_msg);
+										}
+										
+										function clean_string($string){
+											$bad = array("content-type", "bcc", "to:", "cc:", "href");
+											return str_replace($bad, "", $string);
+										}
+										
+										$email_msg .= "Message: " . clean_string($message). "\n";
+										$email_msg .= "Sent by: " . clean_string($name) . "\n";
+										
+										//create email headers
+										$headers = 'From: '. $email_from. "\r\n". 'Reply-To: '. $email_from. "\r\n". 'X-Mailer: PHP/'. phpversion();
+										@mail($email_to, $subject, $message, $headers);
+									}
+								?>
                                 
                             </div>
                             <div class="col-md-5 this-animate" data-animate="fadeInRight">
@@ -275,9 +336,3 @@ session_start();?>
         <!-- ./page scripts -->
     </body>
 </html>
-
-
-
-
-
-

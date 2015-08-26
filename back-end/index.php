@@ -51,14 +51,14 @@ session_start();
                                         {
                                             $r = mysql_query('select profile_picture from users where username="'.$username.'"');
                                             $x = mysql_query('select description from users where username="'.$username.'"');
-                                            $description = mysql_result($x, 0);
+                                            $description = @mysql_result($x, 0);
 
                                             if(!$x)
                                                 die(mysql_error());
                                             if(!$r)
                                                 die(mysql_error());
                                             
-                                            $path = mysql_result($r, 0);
+                                            $path = @mysql_result($r, 0);
                                             echo '<img src="'.$path.'" alt="profile_picture"/>
                                     </div>
                                     <div class="profile-data">
@@ -127,15 +127,64 @@ session_start();
                                 <div class="owl-carousel" id="owl-example">
                                     <div>                                    
                                         <div class="widget-title">Total transfers</div>
-                                        <div class="widget-int">548</div>
+										<?php
+											$username = '';
+											if(isset($_SESSION["username"]) && $_SESSION["username"] != "off")
+												$username = $_SESSION["username"];
+
+											if($username == '')
+												echo '<h1>You are not signed in! </h1><h2>Sign in or Create a new account if you currently have none.</h2>';
+											else{
+												
+												//get id of the user
+												$id = @mysql_result(mysql_query('select id from users where username ="'.$username.'"'),0);
+												
+												//get the total number of transfers
+												$trans = @mysql_query('select count(*) from transactions where id='.$id.';');
+												
+												if($trans != 0){
+													echo '<div class="widget-int">'.$trans.'</div>';
+												}else{				
+													echo '<div class="widget-int">0</div>';
+												}
+											}
+										?>
                                     </div>
                                     <div>                                    
                                         <div class="widget-title">Last Transfer</div>
+										<?php
+											$username = '';
+											if(isset($_SESSION["username"]) && $_SESSION["username"] != "off")
+												$username = $_SESSION["username"];
+
+											if($username == '')
+												echo '<h1>You are not signed in! </h1><h2>Sign in or Create a new account if you currently have none.</h2>';
+											else{
+												
+											}
+										?>
                                         <div class="widget-int">27/08/2014 15:23</div>
                                     </div>
                                     <div>                                    
                                         <div class="widget-title">Favorite receiver</div>
-                                        <div class="widget-int">Antonia</div>
+										<?php
+											$username = '';
+											if(isset($_SESSION["username"]) && $_SESSION["username"] != "off")
+												$username = $_SESSION["username"];
+
+											if($username == '')
+												echo '<h1>You are not signed in! </h1><h2>Sign in or Create a new account if you currently have none.</h2>';
+											else{
+												//run query to get most frequent receiver
+												$receiver = @mysql_result(mysql_query('select receiver from transactions group by receiver order by count(*) desc limit 1'),0);
+												
+												if($receiver == ''){
+													echo '<div class="widget-int">None</div>';
+												}else{
+													echo '<div class="widget-int">'.$receiver.'</div>';
+												}
+											}
+										?>
                                     </div>
                                 </div>                                                        
                             </div> 
@@ -177,7 +226,7 @@ session_start();
                                     <ul class="panel-controls" style="margin-top: 2px;">
                                         <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
                                         <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                                                          
+										            
                                     </ul>
                                 </div>
                                 <div class="panel-body padding-0">
