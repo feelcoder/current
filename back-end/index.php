@@ -77,9 +77,6 @@ session_start();
                     <li class="active">
                         <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>   
 					<li class="active">
                         <a href="pages-profile.php"><span class="fa fa-desktop"></span> <span class="xn-text">Profile</span></a>                        
                     </li>   
@@ -113,8 +110,7 @@ session_start();
                 <!-- END X-NAVIGATION VERTICAL -->                     
 
                 <!-- START BREADCRUMB -->
-                <ul class="breadcrumb">
-                    <li><a href="index.php">Dashboard</a></li>                    
+                <ul class="breadcrumb">                   
                     <li class="active">Dashboard</li>
                 </ul>
                 <!-- END BREADCRUMB -->                       
@@ -238,6 +234,7 @@ session_start();
                                 </div>
                             </div>
                             <!-- END SALES & EVENTS BLOCK -->
+
                             <!-- START VISITORS BLOCK -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -324,99 +321,81 @@ session_start();
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>
         
-        <!-- <script type="text/javascript" src="js/demo_dashboard.js"></script>-->
+        <!-- <script type="text/javascript" src="js/demo_dashboard.js"></script> -->
         <!-- END TEMPLATE -->
     <!-- END SCRIPTS -->         
     </body>
 </html>
-<?php
-echo '
 <script type="text/javascript">
 $(function(){        
     /* reportrange */
     if($("#reportrange").length > 0){   
         $("#reportrange").daterangepicker({                    
             ranges: {
-               "Today": [moment(), moment()],
-               "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
-               "Last 7 Days": [moment().subtract(6, "days"), moment()],
-               "Last 30 Days": [moment().subtract(29, "days"), moment()],
-               "This Month": [moment().startOf("month"), moment().endOf("month")],
-               "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+               'Today': [moment(), moment()],
+               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+               'This Month': [moment().startOf('month'), moment().endOf('month')],
+               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
-            opens: "left",
-            buttonClasses: ["btn btn-default"],
-            applyClass: "btn-small btn-primary",
-            cancelClass: "btn-small",
-            format: "MM.DD.YYYY",
-            separator: " to ",
-            startDate: moment().subtract("days", 29),
+            opens: 'left',
+            buttonClasses: ['btn btn-default'],
+            applyClass: 'btn-small btn-primary',
+            cancelClass: 'btn-small',
+            format: 'MM.DD.YYYY',
+            separator: ' to ',
+            startDate: moment().subtract('days', 29),
             endDate: moment()            
           },function(start, end) {
-              $("#reportrange span").php(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
+              $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         });
         
-        $("#reportrange span").php(moment().subtract("days", 29).format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY"));
-    });';
-
-    /* Donut dashboard chart */
-    
-    $result = "select name,id from agencies";
-    $details = array();
-
-    while($row = mysql_fetch_array($result))
-    {
-        $r = mysql_query("select count(*) from history where agency_id=".$row[1]);
-        $a = mysql_result($row,0);
-        $b = mysql_result($r,0);
-
-        array_push($details, array("name" => $a, "count" => $b));
+        $("#reportrange span").html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
     }
-
-    echo '
+    /* end reportrange */
+    
+    
+    /* Donut dashboard chart */
+    //This is a mapping of agency name against number of transactions carried out by the agency for a particular user
+    //this example demostrates with hard coded exmples.
+    //Test.php i sent to you explains how to get this mapping
     Morris.Donut({
-        element: "dashboard-donut-1",
-        data:[';
-        $i = 0;
-        for($i = 0; i < count($details) - 1; $i++)
-            echo '{label: "'.$details[$i]["name"].'" , value: '.$details[$i]["count"].'}';
-        echo '{label: "'.$details[$i]["name"].'" , value: '.$details[$i]["count"].'}
+        element: 'dashboard-donut-1',
+        data: [
+            {label: "Express Echange", value: 2513},
+            {label: "Express Union", value: 764},
+            {label: "Emi Money", value: 311}
         ],
-        colors: [';
-        for($i = 0; i < count($details) - 1; $i++)
-            if($i%2 == 0)
-                echo '"33414E",';
-            else if($i%3 == 0)
-                echo '"3FBAE4",';
-            else
-                echo '"FEA223",';
-            echo '"3FBAE4"],
+        colors: ['#33414E', '#3FBAE4', '#FEA223'],
         resize: true
     });
     /* END Donut dashboard chart */
+    
+    //This line graph is a mapping of year/month and total transactions for that month
+    //i've sent you a file describing this too.
 
     /* Line dashboard chart */
     Morris.Line({
-      element: "dashboard-line-1",
-      data: [';
-
-        $result = mysql_query("select date from history");
-        $r = mysql_result($result, 0);  //first date of transaction
-
-        $time=strtotime($r);
-        $month=date("F",$time);
-        $year=date("Y",$time);
-
-      echo '],
-      xkey: "y",
-      ykeys: ["a"],
-      labels: ["Trasnfers",],
+      element: 'dashboard-line-1',
+      data: [
+        { y: '2015-08', a: 2},
+        { y: '2015-09', a: 4},
+        { y: '2015-10', a: 7},
+        { y: '2015-11', a: 5},
+        { y: '2015-12', a: 6},
+        { y: '2016-01', a: 9},
+        { y: '2016-02', a: 18}
+      ],
+      xkey: 'y',
+      ykeys: ['a'],
+      labels: ['Month','transactions'],
       resize: true,
       hideHover: true,
-      xLabels: "Month",
-      gridTextSize: "10px",
-      lineColors: ["#3FBAE4","#33414E"],
-      gridLineColor: "#E5E5E5"
+      xLabels: 'day',
+      gridTextSize: '10px',
+      lineColors: ['#3FBAE4'],
+      gridLineColor: '#E5E5E5'
     });   
     /* EMD Line dashboard chart */
     
@@ -429,8 +408,8 @@ $(function(){
     
     
 });
-</script>';
-?>
 
+
+</script>
 
 

@@ -5,10 +5,13 @@ $connection = mysql_pconnect("localhost","test","test");
     mysql_select_db("test");
 session_start();
 
-if(isset($_POST["submit"]))
+if(isset($_POST["submit_button"]))
 {
     if(isset($_POST["name"]))   //store the name of the agency used
-        $_SESSION["agency"] = $_POST["name"];
+    {
+        $_SESSION["agency_name"] = $_POST["name"];
+        header("Location: form-payment-form.php");
+    }
 }   
 ?>
 <!DOCTYPE html>
@@ -78,9 +81,6 @@ if(isset($_POST["submit"]))
                     <li class="active">
                         <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>  
 					<li class="active">
                         <a href="pages-profile.php"><span class="fa fa-desktop"></span> <span class="xn-text">Profile</span></a>                        
                     </li>  

@@ -1,58 +1,34 @@
-<!-- 
-    I hvave not tested this form yet as we have to simulate mobile money payment
--->
+
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
-        header("Location: pages-error-500.html");
+        header("Location: pages-error-500.php");
     mysql_select_db("test");
 session_start();
 
-//store these  variables for use in the next pages
-if(isset($_POST["submit_button"]))
+if(isset($_POST['submit_button']))
 {
-    $user = '';
-    $receiver = '';
-    $receiver_number = '';
-    $mobile_money_number = '';
-    $amount = '';
-    $date = '';
-    $location = '';
+    $_SESSION['sender_name'] = $_POST['sender_name'];
+    $_SESSION['sender_phone_number'] = $_POST['sender_phone_number'];
+    $_SESSION['receiver_name'] =$_POST['receiver_name'];
+    $_SESSION['receiver_phone_number'] = $_POST['receiver_phone_number'];
+    $_SESSION['amount'] = $_POST['amount'];
+    $_SESSION['location'] = $_POST['location'];
+    $_SESSION['date'] = $_POST['date'];
+    $password = '';
+    if(isset($_POST['password']))
+        $password = $_POST['password'];
+    $_SESSION['password'] = $password;
 
-    if(isset($_POST['username']))
-        $user = $_POST['username'];
-    if(isset($_POST['receiver']))
-        $receiver = $_POST['receiver'];
-    if(isset($_POST['receiver_number']))
-        $receiver_number = $_POST['receiver_number'];
-    if(isset($_POST['mobile_money_number']))
-        $mobile_money_number = $_POST['mobile_money_number'];
-    if(isset($_POST['amount']))
-        $amount = $_POST['amount'];
-    if(isset($_POST['date']))
-        $date = $_POST['date'];
-
-    if($user != '')
-        $_SESSION['user'] = $user;
-    if($receiver != '')
-        $_SESSION['receiver'] = $receiver;
-    if($receiver_number != '')
-        $_SESSION['receiver_number'] = $receiver_number;
-    if($mobile_money_number != '')
-        $_SESSION['mobile_money_number'] = $mobile_money_number;
-    if($amount != '')
-        $_SESSION['amount'] = $amount;
-    if($date != '')
-        $_SESSION['date'] = $date;
-    if($location != '')
-        $_SESSION['location'] = $location;
+    header("Location: pages-mobile-money.php");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>        
         <!-- META SECTION -->
-        <title>Quick Money Transfer </title>            
+        <title>Quick Money Transfer | Sending Form</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -62,7 +38,7 @@ if(isset($_POST["submit_button"]))
         
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
-        <!-- EOF CSS INCLUDE -->                  
+        <!-- EOF CSS INCLUDE -->            
     </head>
     <body>
         <!-- START PAGE CONTAINER -->
@@ -98,21 +74,14 @@ if(isset($_POST["submit_button"]))
                                             
                                             $path = mysql_result($r, 0);
                                             echo '<img src="'.$path.'" alt="profile_picture"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">'.$username.'</div>
-                                        <div class="profile-data-title">'.$description.'</div>
-                                    </div>';
+                            </div>
+                            <div class="profile-data">
+                                <div class="profile-data-name">'.$username.'</div>
+                                <div class="profile-data-title">'.$description.'</div>
+                            </div>';
+                                        }
                                     }
-                                }
-                                else
-                                     echo '<img src="" alt="profile_picture"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">uername</div>
-                                        <div class="profile-data-title">description</div>
-                                    </div>';
-                            ?>
+                                ?>
                         </div>                                                                        
                     </li>
                     <li class="xn-title">Navigation</li>
@@ -125,9 +94,6 @@ if(isset($_POST["submit_button"]))
                     <li class="active">
                         <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>         
                     
                 </ul>
                 <!-- END X-NAVIGATION -->
@@ -156,108 +122,125 @@ if(isset($_POST["submit_button"]))
                     <!-- END SIGN OUT -->
                     
                 </ul>
-                <!-- END X-NAVIGATION VERTICAL -->   
-            </div>
-            <!-- END PAGE SIDEBAR -->
-            
-            <!-- PAGE CONTENT -->
-            <div class="page-content">
-                
-                           
+                <!-- END X-NAVIGATION VERTICAL -->                  
                 
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="index.php">Dashboard</a></li>
-                    <li><a href="pages-transaction.php">Select agency</a></li>
-                    <li class="active">fill form</li>
+                    <li><a href="pages-transaction.php">Transaction</a></li>
+                    <li class="active">Form</li>
                 </ul>
                 <!-- END BREADCRUMB -->
                 
                 <!-- PAGE TITLE -->
-                <div class="page-title">                  
-                    <h2><span class="fa fa-arrow-circle-o-left"><?php if(isset($_SESSION["agency"])) echo $_SESSION["agency"]; ?></span></h2>
+                <div class="page-title">                    
+                    <h2><span class="fa fa-arrow-circle-o-left"></span><?php if(isset($_SESSION['agency_name'])) echo $_SESSION['agency_name']; ?></h2>
+                    
                 </div>
                 <!-- END PAGE TITLE -->                
                 
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap">                
-                                <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
-                            <div class="panel-body list-group scroll" style="height: 50px;">                                
-                                <a class="list-group-item" href="#">
-                                    <strong>Fill form..</strong>
-                                    <div class="progress progress-small progress-striped active">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 65%;">60%</div>
-                                    </div>
-                                </a>
-                                
-                            </div>                                
-                        </div>  
+                
                     <div class="row">
                         <div class="col-md-6">
-
-                            <!-- START JQUERY VALIDATION PLUGIN -->
-                            <div class="block">
-                                <form id="jvalidate" role="form" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-
-                                <div class="panel-body">                                    
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Username:</label>  
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" value="<?php if(isset($_SESSION["username"]) && $_SESSION["username"] != "off") echo $_SESSION["username"]; ?>" name="username"/>
-                                            <span class="help-block">min size = 2, max size = 20</span>
+                            <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                                <div class="panel-body list-group scroll" style="height: 50px;">                                
+                                    <a class="list-group-item" href="#">
+                                    <strong>Fill sending form..</strong>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
                                         </div>
-                                    </div>  
+                                    </div>
+                                    </a>
+                                </div>                                
+                            </div> 
+                            <!-- START VALIDATIONENGINE PLUGIN -->
+                            <div class="block">                              
+                                <form id="jvalidate" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">   
+                                <h3>Me</h3>                         
                                     <div class="form-group">
-                                            <label class="col-md-3 control-label">Mobile Money Number:</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="mask_ssn form-control" value="" name="mobile_money_number"/>
-                                                <span class="help-block">Example: 679-87-6543</span>
-                                            </div>
+                                        <label class="col-md-3 control-label">Name of sender:</label>
+                                        <div class="col-md-9">
+                                            <input type="text"  class="validate[required,maxSize[20]] form-control" name="sender_name" value="<?php if(isset($_SESSION['sender_name'])) echo $_SESSION['sender_name']; ?>"/>
+                                            <span class="help-block">Required, max size = 20</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Phone number of sender</label>
+                                        <div class="col-md-9">
+                                            <?php 
+                                            $phone_number = mysql_result(mysql_query('select phone_number from users where username="'.$_SESSION["username"].'"'), 0);
+                                            if(isset($_SESSION['sender_phone_number']))
+                                                echo  '
+                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="sender_phone_number" value="'.$_SESSION['sender_phone_number'].'"/>
+                                            ';
+                                            else
+                                            echo '
+                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="sender_phone_number" value="'.$phone_number.'"/>';
+                                            ?>
+                                            <span class="help-block">Required</span>
+                                        </div>
+                                    </div>
+                                    <h3>Receiver</h3>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Name of receiver:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="validate[required,maxSize[20]] form-control" name="receiver_name" value="<?php if(isset($_SESSION['receriver_name'])) echo $_SESSION['receiver_name']; ?>"/>
+                                            <span class="help-block">Required</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Phone number of receiver: </label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="validate[required,custom[integer],min[650000000],max[679999999]] form-control" name="receiver_phone_number" value="<?php if(isset($_SESSION['receiver_phone_number'])) echo $_SESSION['receiver_phone_number']; ?>"/>
+                                            <span class="help-block">Required</span>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Amount:</label>
                                         <div class="col-md-9">
-                                            <input type="text"  value="" name="amount"/>
-                                            <span class="help-block"></span>
+                                            <input type="text" class="validate[required,custom[integer],min[500],max[1000000000]] form-control" name="amount" value="<?php if(isset($_SESSION['amount'])) echo $_SESSION['amount']; ?>"/>
+                                            <span class="help-block">Required</span>
                                         </div>
-                                    </div>          
+                                    </div>
                                     <div class="form-group">
-                                    <label class="col-md-3 control-label">Today:</label>  
+                                        <label class="col-md-3 control-label">Location of receiver:</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="mask_date form-control" value="<?php echo date("Y-m-d"); ?>" name="date"/>
-                                            <span class="help-block">Example: 2012-12-21</span>         
+                                            <input type="text" class="validate[required,maxSize[20]] form-control" name="location" value="<?php if(isset($_SESSION['location'])) echo $_SESSION['location']; ?>"/>
+                                            <span class="help-block">Required</span>
                                         </div>
                                     </div>
-                                    <h4>Receiver</h4>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Name of Receiver:</label>  
+                                        <label class="col-md-3 control-label">Date:</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="receiver"/>
-                                            <span class="help-block">min size = 2, max size = 20</span>
+                                            <?php
+                                            $date = date('Y-m-d');
+                                            echo '
+                                            <input type="text" class="validate[required,maxSize[20]] form-control" name="date" value="'.$date.'"/>';
+                                             ?>
+                                            <span class="help-block">Required</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Town:</label>  
+                                        <label class="col-md-3 control-label">Password? :</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="location"/>
-                                            <span class="help-block">min size = 2, max size = 20</span>
+                                            <input type="password" class="validate[required,minSize[8],maxSize[10]] form-control" id="password" name="password" value="<?php if(isset($_SESSION['password'])) echo $_SESSION['password']; ?>"/>
+                                            <span class="help-block">Required, max = 64</span>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                            <label class="col-md-3 control-label">Phone Number:</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="mask_ssn form-control" value="" name="receiver_number"/>
-                                                <span class="help-block">Example: 679-87-6543</span>
-                                            </div>
-                                    </div>
-
-                                    <a href="pages-transaction.php" style ="float: left;"><input type="button" class="btn btn-info btn-block" value="back" /><a/>    
+                                    </div>  
+                                    <div class="btn-group pull-left">
+                                        <a href="pages-transaction.php"><button class="btn btn-link btn-block" name="go_back">Back</button></a>
+                                    </div>                    
                                     <div class="btn-group pull-right">
                                         <button class="btn btn-primary" type="submit" name="submit_button">Submit</button>
-                                    </div>  
-                                </div>  
+                                    </div>                                                                
                                 </form>
-                            </div>
+                            </div>                                               
+                            <!-- END VALIDATIONENGINE PLUGIN -->
+
+                        </div>
+                        
                         </div>
                     </div>
                         
@@ -267,6 +250,7 @@ if(isset($_POST["submit_button"]))
             <!-- END PAGE CONTENT -->
         </div>
         <!-- END PAGE CONTAINER -->
+        
         <!-- MESSAGE BOX-->
         <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
             <div class="mb-container">
@@ -286,10 +270,11 @@ if(isset($_POST["submit_button"]))
             </div>
         </div>
         <!-- END MESSAGE BOX-->
+
         <!-- START PRELOADS -->
         <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-        <!-- END PRELOADS -->                 
+        <!-- END PRELOADS -->                
         
     <!-- START SCRIPTS -->
         <!-- START PLUGINS -->
@@ -324,18 +309,49 @@ if(isset($_POST["submit_button"]))
             var jvalidate = $("#jvalidate").validate({
                 ignore: [],
                 rules: {                                            
-                        login: {
+                        sender_name: {
                                 required: true,
                                 minlength: 2,
-                                maxlength: 20
+                                maxlength: 100
                         },
+                        location: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 100
+                        },
+                        receiver_name: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 100
+                        },
+                        sender_phone_number: {
+                                required: true,
+                                min: 650000000,
+                                max: 699999999
+                        },
+                        receiver_phone_number: {
+                                required: true,
+                                min: 650000000,
+                                max: 699999999,
+                        },
+                        password: {
+                                required: false,
+                                minlength: 8,
+                                maxlength: 64
+                        },
+                        date: {
+                                required: true,
+                                date: true
+                        },
+                        amount: {
+                            required: true,
+                            min: 500,
+                        }
                     }                                        
-                });                                    
-
+                });   
         </script>
         
     <!-- END SCRIPTS -->          
         
     </body>
 </html>
-

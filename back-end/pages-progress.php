@@ -1,7 +1,3 @@
-<!--
-    This is also part of the mobile money process
--->
-
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
@@ -9,7 +5,6 @@ $connection = mysql_pconnect("localhost","test","test");
     mysql_select_db("test");
 session_start();
 
-$_SESSION["mobile_money"] = "on";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,10 +73,6 @@ $_SESSION["mobile_money"] = "on";
                     <li class="active">
                         <a href="pages-history.php"><span class="fa fa-desktop"></span> <span class="xn-text">History</span></a>                        
                     </li>   
-                    <li class="active">
-                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>        
-                    
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>
@@ -126,31 +117,36 @@ $_SESSION["mobile_money"] = "on";
                             </div>
                             <div class="panel-body list-group scroll" style="height: 200px;">                                
                                 <a class="list-group-item" href="#">
-                                    <!-- simulate mobile money transfer -->
+                                    
+                                    
                                     <?php
-                                        if(isset($_SESSION["mobile_money"]) && if($_SESSION["mobile_money"]) == "on")
-                                        {
-                                                echo '<strong>Sending money.. Answer SMS confirmation</strong>
+
+                                        sleep(5); //simulate all transactions.
+                                                echo '<strong id="title">DONE. CONGRATULATIONS!..</strong>
                                     <div class="progress progress-xlarge progress-striped active">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">90%</div>
+                                        <div id="progress_bar" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">90%</div>
                                     </div>
-                                    <small class="text-muted">'.if(isset($_SESSION["receiver_name"])) echo $_SESSION["receiver_name"].', '.$if(isset($_SESSION["date"])) echo $_SESSION["date"] .'/ 90%</small>';
-                                        for($i = 0; $i < 10000000; $i++)
-                                            ;
-                                            $_SESSION["mobile_money"] = "off";
-                                            header("Location: pages-progress.php");
-                                        }
-                                        else
-                                        {
-                                            if(isset($_SESSION["mobile_money"]) && $_SESSION["mobile_money"]=="off")
-                                                    echo '<strong>SUCCESS!</strong>
-                                    <div class="progress progress-xlarge progress-striped active">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">10%</div>
-                                    </div>
-                                    <small class="text-muted">'.if(isset($_SESSION["receiver_name"])) echo $_SESSION["receiver_name"].', '.$if(isset($_SESSION["date"])) echo $_SESSION["date"] .'/ 100%</small>';
-                                        }
+                                    <small id="small" class="text-muted">';echo '0%</small>';
+
+                                        //add transactio to database
+
+                                        $id = mysql_result(mysql_query('select id from users where username = "'.$_SESSION["username"].'"'), 0);
+                                        $agency_id = mysql_result(mysql_query('select id from agencies where name = "'.$_SESSION['agency_name'].'"'),0);
+                                        $receiver = $_SESSION['receiver_name'];
+                                        $date = $_SESSION['date'];
+                                        $location = $_SESSION['location'];
+                                        $amount = $_SESSION['amount'];
+
+                                        $x = mysql_query('insert into transactions values ('.$id.',"'.$receiver.'","'.$date.'",'.$amount.',"'.$location.'",'.$agency_id.')');
+                                        if(!$x)
+                                            echo 'insert error';
+
+                                        $username = $_SESSION['username'];
+                                        session_unset(); //unset all session variables
+                                        //set back the few important ones
+                                        $_SESSION['username'] = $username;
                                     ?>
-                                    <!-- end simulation -->
+                                    
                                 </a>
                                 
                             </div>                                
@@ -209,9 +205,19 @@ $_SESSION["mobile_money"] = "on";
     <!-- END SCRIPTS -->         
     </body>
 </html>
-
-
-
-
-
-
+<script>
+$(document).ready(function(){
+    var level = document.getElementById("progress_bar");
+    var small = document.getElementById("small");
+    for(var i = 0; i <= 100; i++)
+    {
+        $("#progress_bar").attr("style", "width: " + i + "%");
+        
+        level.innerHTML = i + "%";
+        small.innerHTML = i + "%";
+    }
+    
+    var title = document.getElementById("title");
+    small.innerHTML = "100%";
+});
+</script>

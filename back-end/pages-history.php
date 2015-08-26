@@ -72,10 +72,7 @@ session_start();
                     </li> 
                     <li class="active">
                         <a href="pages-transaction.php"><span class="fa fa-desktop"></span> <span class="xn-text">Trasaction</span></a>                        
-                    </li>       
-                    <li class="active">
-                        <a href="pages-mobile-money.php"><span class="fa fa-desktop"></span> <span class="xn-text">Mobile Money</span></a>                        
-                    </li>         
+                    </li>           
 					<li class="active">
                         <a href="pages-profile.php"><span class="fa fa-desktop"></span> <span class="xn-text">Profile</span></a>                        
                     </li>         
