@@ -280,6 +280,9 @@ session_start();
 <script type="text/javascript">
 $(function(){        
     /* reportrange */
+    //This displays the time and date.
+    //Nothing to be done herr
+    
     if($("#reportrange").length > 0){   
         $("#reportrange").daterangepicker({                    
             ranges: {
