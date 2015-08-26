@@ -1,10 +1,3 @@
-<!---
-    Works well.
-    Few things you should do though:
-    1: Write something on privacy or remove it
-    2: Do something about "forgot password"
--->
-
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
@@ -113,7 +106,6 @@ if(isset($_SESSION["username"]))
                     <div class="pull-right">
                         <a href="../index.php">Home</a> |
                         <a href="../about-us.php">About</a> |
-                        <a href="../privacy.php">Privacy</a> |
                         <a href="../contacts.php">Contact Us</a>
                     </div>
                 </div>

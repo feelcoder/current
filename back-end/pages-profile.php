@@ -1,7 +1,6 @@
 <!-- work to be done here
     1: actually the code uploads the image but for some reason it does not display the pic on the page
 		Need more time to fix this.
-    2: complete change password option.
     3: Jvalidate checks don't work. Provide javascript front end checks to inputs
     4: On edit button click, the page reloads and starts from the top.
         Set the page to focus (jump to) the editing field.
@@ -198,7 +197,7 @@ if(isset($_POST['submit_button']))
 									}
 								?>
                                 <div class="btn-group pull-right">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><a href="#">Change Password</a></button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Change Password</button>
                                 </div> 
 								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
 									<div class="modal-dialog"> 
@@ -206,29 +205,77 @@ if(isset($_POST['submit_button']))
 											<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
 												<h4 class="modal-title" id="myModalLabel"> Atlant Password Changer</h4> 
 											</div> 
-											<div class="modal-body">
-												<form role="form">
-													<div class="form-group">
-														<label for="cpassword">Old Password:</label>
-														<input type="password" class="form-control" id="cpass" placeholder="Enter old Password">
-													</div>
-													<div class="form-group">
-														<label for="cpassword1">New Password:</label>
-														<input type="password" class="form-control" id="cpass1" placeholder="Enter New Password">
-													</div>
-													<div class="form-group">
-														<label for="cpassword2">Confirm:</label>
-														<input type="password" class="form-control" id="cpass2" placeholder="Confirm New Password">
-													</div>
-												</form>
-											</div> 
+												<div class="block">                              
+					                                <form id="cvalidate" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">                            
+					                                    <div class="form-group">
+					                                        <label class="col-md-3 control-label">Old Password:</label>
+					                                        <div class="col-md-9">
+					                                            <input type="password" class="validate[required,minSize[8],maxSize[10]] form-control" id="old_password" name="old_password"/>
+					                                            <span class="help-block">Required, min size = 8, max size = 64</span>
+					                                        </div>
+					                                    </div>  
+					                                    <div class="form-group">
+					                                        <label class="col-md-3 control-label">New Password:</label>
+					                                        <div class="col-md-9">
+					                                            <input type="password" class="validate[required,minSize[8],maxSize[10]] form-control" id="new_password" name="new_password"/>
+					                                            <span class="help-block">Required, min size = 8, max size = 64</span>
+					                                        </div>
+					                                    </div>                    
+					                                    <div class="form-group">
+					                                        <label class="col-md-3 control-label">Confirm:</label>
+					                                        <div class="col-md-9">
+					                                            <input type="password" class="validate[required,equals[new_password]] form-control"/>
+					                                            <span class="help-block">Required, equals Password</span>
+					                                        </div>
+					                                    </div>                                                                                        
+					                                </form>
+                           						</div>                                           
 											<div class="modal-footer"> 
 												<button type="button" class="btn btn-default" data-dismiss="modal">Close </button> 
-												<button type="button" class="btn btn-primary"> Change Password </button> 
+												<button class="btn btn-primary" type="submit" name="subbtn_pass">Submit</button>
 											</div> 
 										</div><!-- /.modal-content --> 
 									</div><!-- /.modal -->
 								</div>
+								<?php
+									$username = $_SESSION["username"];
+									$old_password = '';
+									$new_password = '';
+									$confirm_pass = '';
+									$error_log = '';
+
+									if(isset($_POST['subbtn_pass'])){
+										if(isset($_POST['old_password']))
+											$old_password = $_POST['old_password'];
+										else
+											$error_log .= 'No old password!\n';
+										if(isset($_POST['new_password']))
+											$new_password = $_POST['new_password'];
+										else 
+											$error_log .= 'New password needed!\n';
+										if(isset($_POST['confirm_pass']))
+											$confirm_pass = $_POST['confirm_pass'];
+										else
+											$error_log .= 'Passwords do not match! Please ensure they do!';
+									}
+									$hashed_pass = hash('sha512', $old_password);
+									if(empty($error_log)){
+										//display modal with error messages.
+										echo ""
+									} else {
+										//first check if password provided is correct
+										$truth = mysql_query("select password from users where username='". $username . "'");
+										if(!$truth)
+											echo 'could not query the db: '. mysql_error;
+
+										if($hashed_pass != $truth)
+											echo 'passwords do not match';
+										else{
+											//update db with new password
+											
+										}
+									}
+								?>
 								
                             </div>
                             </div>
@@ -544,7 +591,28 @@ if(isset($_POST['submit_button']))
                         },
                         
                     }                                        
-                });   
+                }); 
+            var cvalidate = $("#cvalidate").validate({
+            	ignore: [],
+            	rules: {
+            		old_password: {
+            			required: true,
+            			minlength: 8,
+            			maxlength: 64
+            		},
+            		new_password: {
+            			required: true,
+            			minlength: 8,
+            			maxlength: 64
+            		},
+            		'new_re_password': {
+            			required: true,
+            			minlength: 8,
+            			maxlength: 64,
+            			equalTo: '#new_password'
+            		}
+            	}
+            })  
         </script>
         
     <!-- END SCRIPTS -->          
