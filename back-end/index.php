@@ -299,7 +299,7 @@ session_start();
         <!-- END PRELOADS -->                  
         
     <!-- START SCRIPTS -->
-        <!-- START PLUGINS -->
+       <!-- START PLUGINS -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
@@ -328,6 +328,7 @@ session_start();
         
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>
+        
         
         <!-- <script type="text/javascript" src="js/demo_dashboard.js"></script> -->
         <!-- END TEMPLATE -->
@@ -370,23 +371,44 @@ $(function(){
     /* Donut dashboard chart */
     //This is a mapping of agency name against number of transactions carried out by the agency for a particular user
     //this example demostrates with hard coded exmples.
-    //Test.php i sent to you explains how to get this mapping
+    <?php
+
+    #Table of agency_id | number of transactions made
+    $a = mysql_query('select agency_id, count(*) from transactions group by agency_id');
+
+    #Transfrom the above to table of Agency_name | number of transactios made
+    #Generate a map of <Agency name as key -- number of transactiosn made as value>
+    $map = array();
+
+    while($row = mysql_fetch_array($a))
+    {
+        $key = mysql_result(mysql_query('select name from agencies where id = '.$row[0].''),0);
+        $value = $row[1];
+
+        $pair = array("key" => $key, "value" => $value);
+
+        array_push($map, $pair);
+    }
+
+   echo '
     Morris.Donut({
-        element: 'dashboard-donut-1',
-        data: [
-            {label: "Express Echange", value: 2513},
-            {label: "Express Union", value: 764},
-            {label: "Emi Money", value: 311}
-        ],
-        colors: ['#33414E', '#3FBAE4', '#FEA223'],
+        element: "dashboard-donut-1",
+        data: [';
+        $i = 0;
+            for($i = 0; $i < count($map) - 1; $i++)
+                echo '{label: "'.$map[$i]["key"].'", value: '.$map[$i]["value"].'},';
+            echo '{label: "'.$map[$i]["key"].'", value: '.$map[$i]["value"].'}';
+        echo '],
+        colors: ["#33414E", "#3FBAE4", "#FEA223","red"],
         resize: true
-    });
+    });';
     /* END Donut dashboard chart */
     
     //This line graph is a mapping of year/month and total transactions for that month
     //i've sent you a file describing this too.
 
     /* Line dashboard chart */
+    ?>
     Morris.Line({
       element: 'dashboard-line-1',
       data: [
