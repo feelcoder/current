@@ -103,9 +103,6 @@ if(isset($_SESSION["username"]))
 									$mail->Body = $body;
 									$mail->AltBody = $body;
 									
-									//THIS HAS TO BE REMOVED ALONG WITH EVERY OTHER ERROR MESSAGE OR THEY CAN BE CHANGED TO MESSAGES WHICH MAKE SENSE TO 
-									//END USERS. IT HERE JUST FOR TESTING PURPOSES
-									//THIS SHOULD BE DONE DURING CLEAN UP PHASE
 									if(!$mail->send()){
 										echo '<p style="color: red;"><strong>Message could not be sent!</strong></p>';
 										echo '<p style="color: red;"><strong>'. $mail->ErrorInfo . '</strong></p>;';
