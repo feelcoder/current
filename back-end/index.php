@@ -140,7 +140,7 @@ session_start();
 												$id = @mysql_result(mysql_query('select id from users where username ="'.$username.'"'),0);
 												
 												//get the total number of transfers
-												$trans = @mysql_query('select count(*) from transactions where id='.$id.';');
+												$trans = @mysql_result(mysql_query('select count(*) from transactions where id='.$id.';'),0);
 												
 												if($trans != 0){
 													echo '<div class="widget-int">'.$trans.'</div>';
@@ -176,7 +176,7 @@ session_start();
 												echo '<h1>You are not signed in! </h1><h2>Sign in or Create a new account if you currently have none.</h2>';
 											else{
 												//run query to get most frequent receiver
-												$receiver = @mysql_result(mysql_query('select receiver from transactions group by receiver order by count(*) desc limit 1'),0);
+												$receiver = mysql_result(mysql_query('select receiver from transactions group by receiver order by count(*) desc limit 1'),0);
 												
 												if($receiver == ''){
 													echo '<div class="widget-int">None</div>';
