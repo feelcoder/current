@@ -151,7 +151,8 @@ session_start();
                                         $agency = '';
                                         $amount = '';
 
-                                        $a = mysql_query('select * from transactions');
+                                        $id = mysql_result(mysql_query('select id from users where username="'.$_SESSION['username'].'"'),0);
+                                        $a = mysql_query('select * from transactions where id='.$id);
 
                                         while($row = mysql_fetch_array($a))
                                         {
