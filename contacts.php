@@ -11,6 +11,7 @@ session_start();?>
         <!-- END META SECTION -->
         
         <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
         
     </head>
     <body>

@@ -13,7 +13,8 @@ session_start(); ?>
         <link rel="stylesheet" type="text/css" href="css/revolution-slider/extralayers.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="css/revolution-slider/settings.css" media="screen" />
         
-        <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />                  
+        <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />    
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />              
 
     </head>
     <body>
