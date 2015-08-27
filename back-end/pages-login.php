@@ -1,31 +1,16 @@
-<!---
-    Works well.
-    Few things you should do though:
-    1: Write something on privacy or remove it
-    2: Do something about "forgot password"
--->
+<?php 
 
-<?php error_reporting(E_ALL ^ E_DEPRECATED);
-$connection = mysql_pconnect("localhost","test","test");
-     if(!$connection)
-        header("Location: pages-error-500.php");
-    mysql_select_db("test");
-
-//clear any running session
-//for some reason, unset was not working
-    //start new session
-session_start();
+require_once("online_connection.php");
 
 if(isset($_SESSION["username"]))
-    $_SESSION["username"] = "off";
-
-
+    if($_SESSION["username"] != "off")
+        header("Location: index.php");
 ?>
 <!DOCTYPE html>
 <html lang="en" class="body-full-height">
     <head>        
         <!-- META SECTION -->
-        <title>Quick Money Transfer</title>            
+        <title>E2Cash Money Transfer | Login</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -108,13 +93,13 @@ if(isset($_SESSION["username"]))
                 </div>
                 <div class="login-footer">
                     <div class="pull-left">
-                        &copy; 2015 Quick Money Transfer
+                        &copy; 2015 E2Cash Money Transfer
                     </div>
                     <div class="pull-right">
-                        <a href="../index.php">Home</a> |
-                        <a href="../about-us.php">About</a> |
-                        <a href="../privacy.php">Privacy</a> |
-                        <a href="../contacts.php">Contact Us</a>
+                        <a href="../index.html">Home</a> |
+                        <a href="../about-us.html">About</a> |
+                        <a href="../privacy.html">Privacy</a> |
+                        <a href="../contacts.html">Contact Us</a>
                     </div>
                 </div>
             </div>

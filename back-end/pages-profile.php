@@ -1,20 +1,4 @@
-<!-- work to be done here
-    1: actually the code uploads the image but for some reason it does not display the pic on the page
-		Need more time to fix this.
-    2: complete change password option.
-    3: Jvalidate checks don't work. Provide javascript front end checks to inputs
-    4: On edit button click, the page reloads and starts from the top.
-        Set the page to focus (jump to) the editing field.
-    5: Then the job here is done.
--->
-
-<?php error_reporting(E_ALL ^ E_DEPRECATED);
-$connection = mysql_pconnect("localhost","test","test");
-     if(!$connection)
-        header("Location: pages-error-500.php");
-    mysql_select_db("test");
-session_start();
-
+<?php require_once("online_connection.php");
 if(isset($_POST['submit_button']))
     header("Location: index.php");
 ?>
@@ -22,7 +6,7 @@ if(isset($_POST['submit_button']))
 <html lang="en">
     <head>        
         <!-- META SECTION -->
-        <title>Quick Money Transfer | Profile</title>            
+        <title>E2Cash Money Transfer | Profile</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -43,7 +27,7 @@ if(isset($_POST['submit_button']))
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="../index.php">Quick Money Transfer</a>
+                        <a href="../index.html">E2Cash Money Transfer</a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
