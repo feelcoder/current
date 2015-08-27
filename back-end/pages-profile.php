@@ -1,26 +1,4 @@
-<<<<<<< HEAD
-<!-- work to be done here
-    1: actually the code uploads the image but for some reason it does not display the pic on the page
-		Need more time to fix this.
-    3: Jvalidate checks don't work. Provide javascript front end checks to inputs
-    4: On edit button click, the page reloads and starts from the top.
-        Set the page to focus (jump to) the editing field.
-    5: Then the job here is done.
--->
-
-<?php error_reporting(E_ALL ^ E_DEPRECATED);
-$connection = mysql_pconnect("localhost","test","test");
-     if(!$connection)
-        header("Location: pages-error-500.php");
-    mysql_select_db("test");
-session_start();
-
-=======
-<?php require_once("local_connection.php");
->>>>>>> dfa64a0b910c79db77f0bb5a5888207af2559160
-if(isset($_POST['submit_button']))
-    header("Location: index.php");
-?>
+<?php require_once("local_connection.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>        

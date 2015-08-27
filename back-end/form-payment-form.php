@@ -1,4 +1,4 @@
-<?php require_once("online_connection.php");
+<?php require_once("local_connection.php");
 if(isset($_POST['submit_button']))
 {
     $_SESSION['sender_name'] = $_POST['sender_name'];
