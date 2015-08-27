@@ -223,7 +223,7 @@ if(isset($_POST['submit_button']))
                                         </div>
                                     </div>  
                                     <div class="btn-group pull-left">
-                                        <a href="pages-transaction.php"><button class="btn btn-link btn-block" name="go_back">Back</button></a>
+                                        <a href="pages-transaction.php">Back</a>
                                     </div>                    
                                     <div class="btn-group pull-right">
                                         <button class="btn btn-primary" type="submit" name="submit_button">Submit</button>

@@ -183,7 +183,10 @@ if(isset($_POST['submit_button']))
                                                 </label>
                                             </label>
                                         </div>
-                                    </div>                                
+                                    </div>              
+                                    <div class="btn-group pull-left">
+                                        <button class="btn btn-warning"><a href="pages-login.php" data-toggle="tooltip" title="Cancel and go to dashboard">Cancel</a></button>
+                                    </div>               
                                     <div class="btn-group pull-right">
                                         <button class="btn btn-primary" type="submit" name="submit_button">Submit</button>
                                     </div>                                                                

@@ -145,6 +145,7 @@
                                     }
                                 }
                                 ?>
+                            <!--
 								<form name="Image" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
 									<div class="btn-group pull-left camera">
 										<input type="file" name="Photo" size="2000000" accept="image/gig, image/jpeg, image/x-ms-bmp,
@@ -152,7 +153,9 @@
 										<button class="btn btn-primary"  name="Photo" id="Photo" type="submit"></button> 
 									</div> 
 								</form>
+                            -->
                                 <?php
+                                /*
                                     $username = $_SESSION["username"];
                                     if(isset($_REQUEST['submitPicture']))
                                     {
@@ -185,6 +188,7 @@
                                     </form>
                                 <?php
                                     }
+                                    */
                                 ?>
                                 <div class="btn-group pull-right">
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Change Password</button>
@@ -263,9 +267,10 @@
 											echo 'Old password does not exist!';
 										else{
 											//update db with new password
-										    $up_pass = mysql_query("update users set password='". $hashed_new_pass . "' where username='". $username . "';"); or die();
+										    $up_pass = mysql_query("update users set password='". $hashed_new_pass . "' where username='". $username . "';") or die();
 										}
 									}
+                                    
 								?>
 								
                             </div>

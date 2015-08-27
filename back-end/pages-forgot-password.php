@@ -150,9 +150,9 @@ if(isset($_SESSION["username"]))
                         &copy; 2015 Quick Money Transfer
                     </div>
                     <div class="pull-right">
-                        <a href="../index.php">Home</a> |
-                        <a href="../about-us.php">About</a> |
-                        <a href="../contacts.php">Contact Us</a>
+                        <a href="../index.html">Home</a> |
+                        <a href="../about-us.html">About</a> |
+                        <a href="../contacts.html">Contact Us</a>
                     </div>
                 </div>
             </div>
