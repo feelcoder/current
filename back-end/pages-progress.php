@@ -162,7 +162,7 @@
                     </div>
                     <div class="mb-footer">
                         <div class="pull-right">
-                            <a href="pages-login.php" class="btn btn-success btn-lg">Yes</a>
+                             <a href="pages-login.php?state=off" name="signout" class="btn btn-success btn-lg">Yes</a>
                             <button class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>

@@ -1,10 +1,11 @@
 <?php 
 
 require_once("online_connection.php");
+if($_GET['state'] == "off")
+    $_SESSION['username'] = "off";
 
-if(isset($_SESSION["username"]))
-    if($_SESSION["username"] != "off")
-        header("Location: index.php");
+if(isset($_SESSION["username"]) && $_SESSION['username'] != "off")
+    header("Location: index.php");
 ?>
 <!DOCTYPE html>
 <html lang="en" class="body-full-height">

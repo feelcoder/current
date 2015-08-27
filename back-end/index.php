@@ -1,9 +1,5 @@
 <?php require_once("online_connection.php");
-if($_SERVER['QUERY_STRING'] == 1)
-{
-    $_SESSION['username'] = "off";
-    include 'pages-login.php';
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -279,7 +275,7 @@ if($_SERVER['QUERY_STRING'] == 1)
                     </div>
                     <div class="mb-footer">
                         <div class="pull-right">
-                            <a href="/?1" name="signout" class="btn btn-success btn-lg">Yes</a>
+                            <a href="pages-login.php?state=off" name="signout" class="btn btn-success btn-lg">Yes</a>
                             <button class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>
