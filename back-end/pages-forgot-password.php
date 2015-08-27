@@ -152,7 +152,6 @@ if(isset($_SESSION["username"]))
                     <div class="pull-right">
                         <a href="../index.php">Home</a> |
                         <a href="../about-us.php">About</a> |
-                        <a href="../privacy.php">Privacy</a> |
                         <a href="../contacts.php">Contact Us</a>
                     </div>
                 </div>

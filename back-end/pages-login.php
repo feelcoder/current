@@ -16,7 +16,7 @@ if(isset($_SESSION["username"]))
 <?php 
 >>>>>>> dfa64a0b910c79db77f0bb5a5888207af2559160
 
-require_once("online_connection.php");
+require_once("local_connection.php");
 if($_GET['state'] == "off")
     $_SESSION['username'] = "off";
 
@@ -120,7 +120,6 @@ if(isset($_SESSION["username"]) && $_SESSION['username'] != "off")
 =======
                         <a href="../index.html">Home</a> |
                         <a href="../about-us.html">About</a> |
-                        <a href="../privacy.html">Privacy</a> |
                         <a href="../contacts.html">Contact Us</a>
 >>>>>>> dfa64a0b910c79db77f0bb5a5888207af2559160
                     </div>

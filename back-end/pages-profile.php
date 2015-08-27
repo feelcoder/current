@@ -16,7 +16,7 @@ $connection = mysql_pconnect("localhost","test","test");
 session_start();
 
 =======
-<?php require_once("online_connection.php");
+<?php require_once("local_connection.php");
 >>>>>>> dfa64a0b910c79db77f0bb5a5888207af2559160
 if(isset($_POST['submit_button']))
     header("Location: index.php");
@@ -46,7 +46,7 @@ if(isset($_POST['submit_button']))
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="../index.html">E2Cash Money Transfer</a>
+                        <a href="../index.html" data-toggle="tooltip" title="Go to Home">E2Cash Money Transfer</a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
@@ -104,13 +104,13 @@ if(isset($_POST['submit_button']))
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <!-- TOGGLE NAVIGATION -->
                     <li class="xn-icon-button">
-                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                        <a href="#" class="x-navigation-minimize" data-toggle="tooltip" title="Minimize navigation bar"><span class="fa fa-dedent"></span></a>
                     </li>
                     <!-- END TOGGLE NAVIGATION -->
                     
                     <!-- SIGN OUT -->
                     <li class="xn-icon-button pull-right">
-                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                        <a href="#" class="mb-control" data-box="#mb-signout" data-toggle="tooltip" title="Sign Out"><span class="fa fa-sign-out"></span></a>                        
                     </li> 
                     <li>
                         <a href="pages-profile.php"><span style ="margin-top: 2px; float: right;"><?php if(isset($_SESSION["username"]) && $_SESSION["username"] != "off") echo $_SESSION[
@@ -171,35 +171,43 @@ if(isset($_POST['submit_button']))
 									<div class="btn-group pull-left camera">
 										<input type="file" name="Photo" size="2000000" accept="image/gig, image/jpeg, image/x-ms-bmp,
 										image/x-png" size="26"><br />
-										<button class="btn btn-primary"  name="Photo" id="Photo" type="submit">Change Picture</button> 
+										<button class="btn btn-primary"  name="Photo" id="Photo" type="submit"></button> 
 									</div> 
 								</form>
-								<?php
-									$username = $_SESSION["username"];
-									$uploadDir = 'assets/images/users/';
-									if(isset($_POST['submitPic']))
-									{
-										$fileName = $_FILES['Photo']['nameOfPic'];
-										$tmpName = $_FILES['Photo']['tmp_name'];
-										$fileSize = $_FILES['Photo']['size'];
-										$fileType = $_FILES['Photo']['type'];
-										
-										$filePath = $uploadDir . $fileName;
-										$result = move_uploaded_file($tmpName, $filePath);
-										
-										if(!result){
-											echo '<p style="color: red">Error uploading file!</p>';
-											exit;
-										}
-										if(!get_magic_quotes_gpc())
-										{
-											$fileName = addslashes($fileName);
-											$filePath = addslashes($filePath);
-										}
-										$query = "UPDATE users set profile_picture=". $filePath . " where username=" . $username . ";";
-										mysql_query($query) or die('Error, query failed: '. mysql_error);
-									}
-								?>
+                                <?php
+                                    $username = $_SESSION["username"];
+                                    if(isset($_REQUEST['submitPicture']))
+                                    {
+                                      $filename=  $_FILES["imgfile"]["name"];
+                                      if ((($_FILES["imgfile"]["type"] == "image/gif")|| ($_FILES["imgfile"]["type"] == "image/jpeg") || ($_FILES["imgfile"]["type"] == "image/png")  || ($_FILES["imgfile"]["type"] == "image/pjpeg")) && ($_FILES["imgfile"]["size"] < 200000))
+                                      {
+                                        if(file_exists($_FILES["imgfile"]["name"]))
+                                        {
+                                          echo "File name exists.";
+                                        }
+                                        else
+                                        {
+                                          move_uploaded_file($_FILES["imgfile"]["tmp_name"],"uploads/$filename");
+                                          $filePath = 'uploads/$filename';
+                                          $query = mysql_query("UPDATE users set profile_picture=". $filePath . " where username=" . $username . ";");
+                                          mysql_query($query) or die('Error, query failed: '. mysql_error);
+                                        }
+                                      }
+                                      else
+                                      {
+                                        echo "invalid file.";
+                                      }
+                                    }
+                                    else
+                                    {
+                                    ?>
+                                    <form method="post" enctype="multipart/form-data">
+                                        File name:<input type="file" name="imgfile"><br>
+                                        <input type="submit" name="submitPicture" value="upload">
+                                    </form>
+                                <?php
+                                    }
+                                ?>
                                 <div class="btn-group pull-right">
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Change Password</button>
                                 </div> 
@@ -207,7 +215,7 @@ if(isset($_POST['submit_button']))
 									<div class="modal-dialog"> 
 										<div class="modal-content"> 
 											<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-												<h4 class="modal-title" id="myModalLabel"> Atlant Password Changer</h4> 
+												<h4 class="modal-title" id="myModalLabel"> E2CashMoney Tranfer Password Changer</h4> 
 											</div> 
 												<div class="block">                              
 					                                <form id="cvalidate" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">                            
@@ -263,9 +271,10 @@ if(isset($_POST['submit_button']))
 											$error_log .= 'Passwords do not match! Please ensure they do!';
 									}
 									$hashed_pass = hash('sha512', $old_password);
+                                    $hashed_new_pass = hash('sha512', $new_password);
 									if(empty($error_log)){
 										//display modal with error messages.
-										echo ""
+										//will do this later. not really necessary now.
 									} else {
 										//first check if password provided is correct
 										$truth = mysql_query("select password from users where username='". $username . "'");
@@ -273,10 +282,10 @@ if(isset($_POST['submit_button']))
 											echo 'could not query the db: '. mysql_error;
 
 										if($hashed_pass != $truth)
-											echo 'passwords do not match';
+											echo 'Old password does not exist!';
 										else{
 											//update db with new password
-											
+										    $up_pass = mysql_query("update users set password='". $hashed_new_pass . "' where username='". $username . "';"); or die();
 										}
 									}
 								?>
@@ -489,7 +498,7 @@ if(isset($_POST['submit_button']))
                                         <button class="btn btn-primary" type="submit" name="submit_button">Save</button>
                                     </div>     
 									<div class="btn-group pull-left">
-										<button class="btn btn-warning"><a href="#">Cancel</a></button>
+										<button class="btn btn-warning"><a href="index.php" data-toggle="tooltip" title="Cancel and go to dashboard">Cancel</a></button>
 									</div> 
                                 </form>
                             </div>                                               

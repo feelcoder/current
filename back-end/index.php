@@ -1,4 +1,4 @@
-<?php require_once("online_connection.php");
+<?php require_once("local_connection.php");
 
 ?>
 <!DOCTYPE html>
