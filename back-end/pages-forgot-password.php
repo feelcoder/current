@@ -1,21 +1,14 @@
-<?php error_reporting(E_ALL ^ E_DEPRECATED);
-$connection = mysql_pconnect("localhost","test","test");
-     if(!$connection)
-        header("Location: pages-error-500.php");
-    mysql_select_db("test");
-
-session_start();
+<?php require_once("online_connection.php");
 
 if(isset($_SESSION["username"]))
     $_SESSION["username"] = "off";
-
 
 ?>
 <!DOCTYPE html>
 <html lang="en" class="body-full-height">
     <head>        
         <!-- META SECTION -->
-        <title>Quick Money Transfer | Password Reset</title>            
+        <title>E2Cash Money Transfer | Password Reset</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

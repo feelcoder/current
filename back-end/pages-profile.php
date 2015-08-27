@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- work to be done here
     1: actually the code uploads the image but for some reason it does not display the pic on the page
 		Need more time to fix this.
@@ -14,6 +15,9 @@ $connection = mysql_pconnect("localhost","test","test");
     mysql_select_db("test");
 session_start();
 
+=======
+<?php require_once("online_connection.php");
+>>>>>>> dfa64a0b910c79db77f0bb5a5888207af2559160
 if(isset($_POST['submit_button']))
     header("Location: index.php");
 ?>
@@ -21,7 +25,7 @@ if(isset($_POST['submit_button']))
 <html lang="en">
     <head>        
         <!-- META SECTION -->
-        <title>Quick Money Transfer | Profile</title>            
+        <title>E2Cash Money Transfer | Profile</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,7 +46,7 @@ if(isset($_POST['submit_button']))
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="../index.php">Quick Money Transfer</a>
+                        <a href="../index.html">E2Cash Money Transfer</a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
@@ -513,7 +517,7 @@ if(isset($_POST['submit_button']))
                     </div>
                     <div class="mb-footer">
                         <div class="pull-right">
-                            <a href="pages-login.php" class="btn btn-success btn-lg">Yes</a>
+                             <a href="pages-login.php?state=off" name="signout" class="btn btn-success btn-lg">Yes</a>
                             <button class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>

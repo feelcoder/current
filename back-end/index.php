@@ -1,20 +1,11 @@
-<!-- I'll leave this to you.
-    I explained everything that is supposed to be done in the overview file i sent 
-    Hope you'll make good use of your free time
--->
+<?php require_once("online_connection.php");
 
-<?php error_reporting(E_ALL ^ E_DEPRECATED);
-$connection = mysql_pconnect("localhost","test","test");
-     if(!$connection)
-        header("Location: pages-error-500.php");
-    mysql_select_db("test");
-session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>        
         <!-- META SECTION -->
-        <title>Quick Money Transfer - home</title>            
+        <title>E2Cash Money Transfer | home</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,7 +26,7 @@ session_start();
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="../index.php">Quick Money Transfer</a>
+                        <a href="../index.html">E2Cash Money Transfer</a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
@@ -284,7 +275,7 @@ session_start();
                     </div>
                     <div class="mb-footer">
                         <div class="pull-right">
-                            <a href="pages-login.php" class="btn btn-success btn-lg">Yes</a>
+                            <a href="pages-login.php?state=off" name="signout" class="btn btn-success btn-lg">Yes</a>
                             <button class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>

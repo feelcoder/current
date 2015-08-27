@@ -1,10 +1,8 @@
-<?php error_reporting(E_ALL ^ E_DEPRECATED); 
-session_start();?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- META SECTION -->
-        <title>Quick Money Transfer- contacts</title>
+        <title>E2Cash Money Transfer | contacts</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,7 +24,7 @@ session_start();?>
                     
                     <!-- page logo -->
                     <div class="logo">
-                        <a href="index.php">Quick Money Transfer</a>
+                        <a href="index.html">E2Cash Money Transfer</a>
                     </div>
                     <!-- ./page logo -->
                     
@@ -41,19 +39,9 @@ session_start();?>
                     
                     <!-- navigation -->
                     <ul class="navigation">
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="about-us.php">About Us</a></li>
-                                                <?php
-                        //check if session is on
-                    
-                        if(isset($_SESSION["username"]))
-                            if($_SESSION["username"] != "off")
-                                echo '<li><a href="back-end/index.php">'.$_SESSION["username"].'</a></li>';
-                            else
-                                echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
-                        else
-                            echo '<li><a href="back-end/pages-login.php">Sign in/Create Account</a></li>';
-                        ?>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="http://e2cash.grn.cc/back-end/pages-login.php">E2Cash Money Transfer </li>
                     </ul>
                     <!-- ./navigation -->                        
 
@@ -76,7 +64,7 @@ session_start();?>
                             <h1>Contacts Us</h1>
                             <!-- breadcrumbs -->
                             <ul class="breadcrumb">
-                                <li><a href="index.php">Home</a></li>
+                                <li><a href="index.html">Home</a></li>
                                 <li class="active">Contacts</li>
                             </ul>               
                             <!-- ./breadcrumbs -->
@@ -150,68 +138,7 @@ session_start();?>
 										document.getElementById('message').value = "";
 									}
 								</script>
-								<?php
-									if(isset($_POST['email'])) {
-										// EDIT THE 2 LINES BELOW AS REQUIRED									 
-										$email_to = "dancarl578@gmail.com";									 									 
-															 
-										function died($error) {								 
-											// your error code can go here		 
-											echo "We are very sorry, but there were error(s) found with the form you submitted. ";
-											echo "These errors appear below.<br /><br />";
-											echo $error."<br /><br />";
-											die();
-										}
-										
-										// validation expected data exists
-										if(!isset($_POST['name']) ||  !isset($_POST['email']) || !isset($_POST['subject']) || !isset($_POST['message'])) {									 
-											died('Fill all the form fields pls!');       									 
-										}
-										
-										$name = $_POST['name'];
-										$email_from = $_POST['email'];
-										$subject = $_POST['subject'];
-										$message = $_POST['message'];
-										
-										$error_msg = '';
-										
-										$email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2, 4}$/';
-										
-										if(!preg_match($email_exp, $email_from)){
-											$error_msg .= 'The Email Address you entered does not appear to be valid.<br />';
-										}
-										
-										$string_exp = "/^[A-Za-z . '-]+$/";
-										
-										if(!preg_match($string_exp, $name)){
-											$error_msg .= 'The name you entered does not appear to be valid.<br />';
-										}
-										
-										if(strlen($subject) <= 0){
-											$error_msg .= 'Please enter a subject to your mail.<br />';
-										}
-										
-										if(strlen($message) <= 0){
-											$error_msg .= 'Please your message contains no content.<br />';
-										}
-										
-										if(strlen($error_message) > 0){
-											died($error_msg);
-										}
-										
-										function clean_string($string){
-											$bad = array("content-type", "bcc", "to:", "cc:", "href");
-											return str_replace($bad, "", $string);
-										}
-										
-										$email_msg .= "Message: " . clean_string($message). "\n";
-										$email_msg .= "Sent by: " . clean_string($name) . "\n";
-										
-										//create email headers
-										$headers = 'From: '. $email_from. "\r\n". 'Reply-To: '. $email_from. "\r\n". 'X-Mailer: PHP/'. phpversion();
-										@mail($email_to, $subject, $message, $headers);
-									}
-								?>
+								
                                 
                             </div>
                             <div class="col-md-5 this-animate" data-animate="fadeInRight">
@@ -274,7 +201,7 @@ session_start();?>
                                     <div class="fc-row">
                                         <span class="fa fa-envelope"></span>
                                         <strong>Daniel Carlson</strong><br>
-                                        <a href="mailto:#">dancarl257@gmail.com/a>
+                                        <a href="mailto:#">dancarl758@gmail.com/a>
                                     </div>                                   
                                 </div>
                             </div>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php error_reporting(E_ALL ^ E_DEPRECATED);
 $connection = mysql_pconnect("localhost","test","test");
      if(!$connection)
@@ -11,14 +12,22 @@ session_start();
 
 if(isset($_SESSION["username"]))
     $_SESSION["username"] = "off";
+=======
+<?php 
+>>>>>>> dfa64a0b910c79db77f0bb5a5888207af2559160
 
+require_once("online_connection.php");
+if($_GET['state'] == "off")
+    $_SESSION['username'] = "off";
 
+if(isset($_SESSION["username"]) && $_SESSION['username'] != "off")
+    header("Location: index.php");
 ?>
 <!DOCTYPE html>
 <html lang="en" class="body-full-height">
     <head>        
         <!-- META SECTION -->
-        <title>Quick Money Transfer</title>            
+        <title>E2Cash Money Transfer | Login</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -101,12 +110,19 @@ if(isset($_SESSION["username"]))
                 </div>
                 <div class="login-footer">
                     <div class="pull-left">
-                        &copy; 2015 Quick Money Transfer
+                        &copy; 2015 E2Cash Money Transfer
                     </div>
                     <div class="pull-right">
+<<<<<<< HEAD
                         <a href="../index.php">Home</a> |
                         <a href="../about-us.php">About</a> |
                         <a href="../contacts.php">Contact Us</a>
+=======
+                        <a href="../index.html">Home</a> |
+                        <a href="../about-us.html">About</a> |
+                        <a href="../privacy.html">Privacy</a> |
+                        <a href="../contacts.html">Contact Us</a>
+>>>>>>> dfa64a0b910c79db77f0bb5a5888207af2559160
                     </div>
                 </div>
             </div>
