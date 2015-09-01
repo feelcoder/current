@@ -25,7 +25,7 @@ if(isset($_POST["submit_button"]))
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-serenity-head-light.css"/>
         <!-- EOF CSS INCLUDE -->            
     </head>
-    <body>
+    <body class="page-container-boxed">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -155,7 +155,7 @@ if(isset($_POST["submit_button"]))
                                         <div class="panel panel-default">
                                             <div class="panel-body profile">
                                                 <div class="profile-image">
-                                                    <img src="'.$logo.'" alt="'.$name.'"/>
+                                                    <img src="'.$logo.'" alt="'.$name.'" class="img-circle" style="width: 160px; height:160px "/>
                                                 </div>
                                                 <div class="profile-data">
                                                     <div class="profile-data-name">'.$name.'</div>
@@ -228,7 +228,7 @@ if(isset($_POST["submit_button"]))
         <!-- END PAGE PLUGINS -->
         
         <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
+        <!-- <script type="text/javascript" src="js/settings.js"></script> -->
         
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>        

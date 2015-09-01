@@ -17,7 +17,7 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-serenity-head-light.css"/>
         <!-- EOF CSS INCLUDE -->                                    
     </head>
-    <body>
+    <body class="page-container-boxed">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -78,7 +78,6 @@
             
             <!-- PAGE CONTENT -->
             <div class="page-content">
-                
                 <!-- START X-NAVIGATION VERTICAL -->
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <!-- TOGGLE NAVIGATION -->
@@ -110,13 +109,13 @@
                 <div class="page-content-wrap">
                     
                     <!-- START WIDGETS -->                    
-                    <div class="row">
-                         <div class="col-md-3">
+                    <div class="row" >
+                         <div class="col-md-3" style="width: 100%;">
                             
                             <!-- START WIDGET SLIDER -->
                             <div class="widget widget-default widget-carousel">
                                 <div class="owl-carousel" id="owl-example">
-                                    <div>                                    
+                                    <div>                                  
                                         <div class="widget-title">Total transfers</div>
 										<?php
 											$username = '';
@@ -188,15 +187,13 @@
                                 </div>                                                        
                             </div> 
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="width: 100%;">
                             
                             <!-- START WIDGET CLOCK -->
                             <div class="widget widget-danger widget-padding-sm">
                                 <div class="widget-big-int plugin-clock">00:00</div>                            
                                 <div class="widget-subtitle plugin-date">Loading...</div>
-                                <div class="widget-controls">                                
-                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
-                                </div>                            
+                                                            
                                 <div class="widget-buttons widget-c3">
                                     <div class="col">
                                         <a href="#"><span class="fa fa-clock-o"></span></a>
@@ -214,7 +211,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="width: 100%;">
                             
                             <!-- START SALES & EVENTS BLOCK -->
                             <div class="panel panel-default">
@@ -315,7 +312,7 @@
         <!-- END THIS PAGE PLUGINS-->        
 
         <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
+        <!-- <script type="text/javascript" src="js/settings.js"></script> -->
         
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>

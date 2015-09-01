@@ -8,6 +8,7 @@ if(isset($_POST['submit_button']))
     $_SESSION['amount'] = $_POST['amount'];
     $_SESSION['location'] = $_POST['location'];
     $_SESSION['date'] = $_POST['date'];
+    $_SESSION['sender_location'] = $_POST['sender_location'];
     $password = '';
     if(isset($_POST['password']))
         $password = $_POST['password'];
@@ -33,7 +34,7 @@ if(isset($_POST['submit_button']))
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-serenity-head-light.css"/>
         <!-- EOF CSS INCLUDE -->            
     </head>
-    <body>
+    <body class="page-container-boxed">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -153,7 +154,7 @@ if(isset($_POST['submit_button']))
                                 <form id="jvalidate" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">   
                                 <h3>Me</h3>                         
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Name of sender:</label>
+                                        <label class="col-md-3 control-label">Name of sender (As on ID):</label>
                                         <div class="col-md-9">
                                             <input type="text"  class="validate[required,maxSize[20]] form-control" name="sender_name" value="<?php if(isset($_SESSION['sender_name'])) echo $_SESSION['sender_name']; ?>"/>
                                             <span class="help-block">Required, max size = 20</span>
@@ -175,11 +176,18 @@ if(isset($_POST['submit_button']))
                                             <span class="help-block">Required</span>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Location of sender: (Town) </label>
+                                        <div class="col-md-9">
+                                            <input type="text"  class="validate[required,maxSize[20]] form-control" name="sender_location" placeholde="your current location" value="<?php if(isset($_SESSION['sender_location'])) echo $_SESSION['sender_location']; ?>" />
+                                            <span class="help-block">Required, max size = 20</span>
+                                        </div>
+                                    </div>
                                     <h3>Receiver</h3>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Name of receiver:</label>
+                                        <label class="col-md-3 control-label">Name of receiver: (As on ID)</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="validate[required,maxSize[20]] form-control" name="receiver_name" value="<?php if(isset($_SESSION['receriver_name'])) echo $_SESSION['receiver_name']; ?>"/>
+                                            <input type="text" class="validate[required,maxSize[20]] form-control" name="receiver_name" value="<?php if(isset($_SESSION['receiver_name'])) echo $_SESSION['receiver_name']; ?>"/>
                                             <span class="help-block">Required</span>
                                         </div>
                                     </div>
@@ -198,7 +206,7 @@ if(isset($_POST['submit_button']))
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Location of receiver:</label>
+                                        <label class="col-md-3 control-label">Location of receiver: (Town) </label>
                                         <div class="col-md-9">
                                             <input type="text" class="validate[required,maxSize[20]] form-control" name="location" value="<?php if(isset($_SESSION['location'])) echo $_SESSION['location']; ?>"/>
                                             <span class="help-block">Required</span>
@@ -216,10 +224,10 @@ if(isset($_POST['submit_button']))
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Password? :</label>
+                                        <label class="col-md-3 control-label">Password : (Optional)</label>
                                         <div class="col-md-9">
                                             <input type="password" class="validate[required,minSize[8],maxSize[10]] form-control" id="password" name="password" value="<?php if(isset($_SESSION['password'])) echo $_SESSION['password']; ?>"/>
-                                            <span class="help-block">Required, max = 64</span>
+                                            <span class="help-block">Optional, max = 64</span>
                                         </div>
                                     </div>  
                                     <div class="btn-group pull-left">
@@ -292,7 +300,7 @@ if(isset($_POST['submit_button']))
         <!-- END THIS PAGE PLUGINS -->               
 
         <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
+        <!-- <script type="text/javascript" src="js/settings.js"></script> -->
         
         <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>

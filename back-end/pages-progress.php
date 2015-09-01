@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-serenity-head-light.css"/>
         <!-- EOF CSS INCLUDE -->                                     
     </head>
-    <body>
+    <body class="page-container-boxed">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -191,7 +191,7 @@
         <!-- END THIS PAGE PLUGINS-->        
 
         <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
+        <!-- <script type="text/javascript" src="js/settings.js"></script> -->
         
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>        

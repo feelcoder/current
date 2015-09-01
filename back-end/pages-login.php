@@ -1,7 +1,5 @@
 <?php require_once("local_connection.php");
 
-
-require_once("local_connection.php");
 if(isset($_GET['state']) && $_GET['state'] == "off")
     $_SESSION['username'] = "off";
 

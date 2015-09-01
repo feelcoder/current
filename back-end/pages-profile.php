@@ -15,7 +15,7 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-serenity-head-light.css"/>
         <!-- EOF CSS INCLUDE -->            
     </head>
-    <body>
+    <body class="page-container-boxed">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -197,7 +197,7 @@
 									<div class="modal-dialog"> 
 										<div class="modal-content"> 
 											<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-												<h4 class="modal-title" id="myModalLabel"> E2CashMoney Tranfer Password Changer</h4> 
+												<h4 class="modal-title" id="myModalLabel"> Change Password</h4> 
 											</div> 
 												<div class="block">                              
 					                                <form id="cvalidate" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">                            
@@ -221,13 +221,14 @@
 					                                            <input type="password" class="validate[required,equals[new_password]] form-control"/>
 					                                            <span class="help-block">Required, equals Password</span>
 					                                        </div>
-					                                    </div>                                                                                        
+					                                    </div>   
+                                                        <div class="modal-footer"> 
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close </button> 
+                                                <button class="btn btn-primary" type="submit" name="subbtn_pass">Submit</button>
+                                            </div>                                                                                      
 					                                </form>
                            						</div>                                           
-											<div class="modal-footer"> 
-												<button type="button" class="btn btn-default" data-dismiss="modal">Close </button> 
-												<button class="btn btn-primary" type="submit" name="subbtn_pass">Submit</button>
-											</div> 
+											
 										</div><!-- /.modal-content --> 
 									</div><!-- /.modal -->
 								</div>
@@ -546,7 +547,7 @@
         <!-- END THIS PAGE PLUGINS -->               
 
         <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
+        <!-- <script type="text/javascript" src="js/settings.js"></script> -->
         
         <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>

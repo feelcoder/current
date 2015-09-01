@@ -6,7 +6,7 @@
         <!-- META SECTION -->
         <title>E2Cash Money Transfer | Payment Form</title>            
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"     />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-serenity-head-light.css"/>
         <!-- EOF CSS INCLUDE -->            
     </head>
-    <body>
+    <body class="page-container-boxed">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -119,7 +119,7 @@
                             <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
                                 <div class="panel-body list-group scroll" style="height: 50px;">                                
                                     <a class="list-group-item" href="#">
-                                        <strong>Confirm and and Money..</strong>
+                                        <strong>Confirm and send Money..</strong>
                                         <div class="progress progress-small progress-striped active">
                                             <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
                                             </div>
@@ -147,6 +147,10 @@
                                             <tr>
                                                 <td>Sender Phone Number</td>
                                                 <td><?php echo $_SESSION['sender_phone_number']; ?></td>
+                                            <tr>
+                                            <tr>
+                                                <td>Sender Location</td>
+                                                <td><?php echo $_SESSION['sender_location']; ?></td>
                                             <tr>
                                             <tr>
                                                 <td>Receiver Name</td>
@@ -181,12 +185,13 @@
                     <div  class="panel-body">
                         <div>
                             <p>sending <strong>(<?php echo $_SESSION['amount']; ?>)</strong> + platform charge<strong>(1000)</strong> = <strong><?php echo $_SESSION['amount'] + 1000; ?></strong><br/>
-                            Click Mtn Mobile money below to send money.</p>
+                            CLICK MTN BUTTON BELOW TO SEND.</p>
                             <span><strong><p>Be close to your phone, You'll get 120 seconds to confirm mobile money payment</p></strong></span>
                         </div>
                         <form action="<?php echo htmlspecialchars('pages-progress.php'); ?>" class="form-horizontal" method="post">
                             <div style="margin-left: 30%;">
-                                <button type="submit" name="submit_button"><img src="../assets/img/users/mtn.jpg" width="100px"/></button>
+                                <button type="submit" name="submit_button"><img src="../assets/img/users/mtn.jpg" width="50px"/></button>
+                                <h4>  SEND</h4>
                             </div>
                         </form>
                     </div>
@@ -239,7 +244,7 @@
         <!-- END PAGE PLUGINS -->
 
         <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
+        <!-- <script type="text/javascript" src="js/settings.js"></script> -->
         
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>        
