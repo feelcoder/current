@@ -137,7 +137,7 @@ if(isset($_POST['submit_button']))
                 <div class="page-content-wrap">                
                 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="width: 100%;">
                             <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
                                 <div class="panel-body list-group scroll" style="height: 50px;">                                
                                     <a class="list-group-item" href="#">
